@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GameShopAPP"
         mc:Ignorable="d"
         Title="Welcome" Height="250" Width="400" ResizeMode="NoResize">
+    
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

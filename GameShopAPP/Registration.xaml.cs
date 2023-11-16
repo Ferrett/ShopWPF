@@ -25,10 +25,10 @@ namespace GameShopAPP
         {
             InitializeComponent();
             _viewModel = new RegistrationViewModel();
-            DataContext = _viewModel;
 
-            // Подписываемся на событие вью-модели для закрытия окна
             _viewModel!.RequestClose += (sender, args) => Close();
+
+            this.DataContext = _viewModel;
         }
     }
 }
