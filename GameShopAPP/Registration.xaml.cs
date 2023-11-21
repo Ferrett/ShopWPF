@@ -1,4 +1,6 @@
-﻿using GameShopAPP.ViewModel;
+﻿using GameShopAPP.Services;
+using GameShopAPP.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ namespace GameShopAPP
         public Registration()
         {
             InitializeComponent();
-            _viewModel = new RegistrationViewModel();
+            _viewModel = new RegistrationViewModel(DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>());
 
             _viewModel!.RequestClose += (sender, args) => Close();
 

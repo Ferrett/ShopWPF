@@ -1,5 +1,6 @@
 ﻿
 using GameShopAPP.Logic;
+using GameShopAPP.Services;
 using System.Collections.Specialized;
 using System.ComponentModel;
 

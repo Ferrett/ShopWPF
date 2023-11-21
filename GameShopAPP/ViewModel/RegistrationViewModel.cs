@@ -1,5 +1,6 @@
 ﻿using GameShopAPP.Logic;
 using GameShopAPP.Model;
+using GameShopAPP.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -14,7 +15,7 @@ using System.Windows;
 
 namespace GameShopAPP.ViewModel
 {
-    public class RegistrationViewModel :  INotifyPropertyChanged
+    public class RegistrationViewModel : INotifyPropertyChanged
     {
         public RelayCommand CloseRegistrationCommand { get; }
         public RelayCommand RegisterCommand { get; }
@@ -33,8 +34,11 @@ namespace GameShopAPP.ViewModel
             }
         }
 
-        public RegistrationViewModel()
+
+        private readonly IUserApiRequest userApiRequest;
+        public RegistrationViewModel(IUserApiRequest _userApiRequest)
         {
+            userApiRequest = _userApiRequest;
             User = new User();
             CloseRegistrationCommand = new RelayCommand(CloseRegistration);
             RegisterCommand = new RelayCommand(Register);
@@ -42,55 +46,25 @@ namespace GameShopAPP.ViewModel
 
         public async Task PostRequest()
         {
-            //https://localhost:7087/User/PostUser
-            // HttpClient client = new HttpClient();
-            //HttpResponseMessage response = await client.GetAsync($"{Routes.APIurl}/{tableName}/{Routes.GetRequest}");
+            //var apiUrl = Configuration["ApiUrl"];
+            await userApiRequest.PostRequest(user);
+            MessageBox.Show("Test");
+            //string responseData = await response.Content.ReadAsStringAsync();
 
-            //return response;
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    MessageBox.Show(responseData);
+            //}
+            //else
+            //{
+            //    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseData);
+            //    List<JArray> errorList = (deserializedResponse!["errors"] as JObject)?.Properties().Select(item => (JArray)item.Value).ToList() ?? new List<JArray>();
+            //    List<string> errorStrings = errorList.Select(error => error.Last!.ToString()).ToList();
+
+            //    errorStrings.ForEach(x => MessageBox.Show(x));
+            //}
 
 
-            string apiUrl = @"https://kqntok5tzzjfpcuhpo5xvpwqcu0absdx.lambda-url.eu-north-1.on.aws/User/PostUser";
-
-            var settings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-ddTHH:mm:ss.fffZ" };
-            var json = JsonConvert.SerializeObject(DateTime.UtcNow, settings);
-
-            string postData = $"{{" +
-                $"\"id\":\"0\"," +
-                $"\"login\":\"{User.login}\"," +
-                $"\"passwordHash\":\"{User.passwordHash}\"," +
-                $"\"nickname\":\"{User.nickname}\"," +
-                $"\"profilePictureURL\":\"\"," +
-                $"\"email\":\"{User.email}\"," +
-                $"\"creationDate\":{json}}}";
-
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response;
-                try
-                {
-                    StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
-
-                    response = await client.PostAsync(apiUrl, content);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show(responseData);
-                       
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Error: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Exception: {ex.Message}");
-                }
-               
-
-                
-            }
         }
 
         private async void Register()
