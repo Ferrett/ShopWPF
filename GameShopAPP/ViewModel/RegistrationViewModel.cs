@@ -3,6 +3,7 @@ using GameShopAPP.Model;
 using GameShopAPP.Services;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -17,7 +18,7 @@ namespace GameShopAPP.ViewModel
 {
     public class RegistrationViewModel : INotifyPropertyChanged
     {
-        public RelayCommand CloseRegistrationCommand { get; }
+        public RelayCommand BackCommand { get; }
         public RelayCommand RegisterCommand { get; }
 
 
@@ -34,42 +35,69 @@ namespace GameShopAPP.ViewModel
             }
         }
 
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged("IsLoading");
+            }
+        }
+
+
+        private string _responseText;
+
+        public string ResponseText
+        {
+            get { return _responseText; }
+            set
+            {
+                _responseText = value;
+                OnPropertyChanged("ResponseText");
+            }
+        }
 
         private readonly IUserApiRequest userApiRequest;
         public RegistrationViewModel(IUserApiRequest _userApiRequest)
         {
             userApiRequest = _userApiRequest;
             User = new User();
-            CloseRegistrationCommand = new RelayCommand(CloseRegistration);
+
+            IsLoading = false;
+            ResponseText = string.Empty;
+
+            BackCommand = new RelayCommand(CloseRegistration);
             RegisterCommand = new RelayCommand(Register);
         }
 
-        public async Task PostRequest()
+        public async Task RegisterNewUser()
         {
-            //var apiUrl = Configuration["ApiUrl"];
-            await userApiRequest.PostRequest(user);
-            MessageBox.Show("Test");
-            //string responseData = await response.Content.ReadAsStringAsync();
+            ResponseText = string.Empty;
+            IsLoading = true;
+            var response = await userApiRequest.PostRequest(user);
+            IsLoading = false;
 
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    MessageBox.Show(responseData);
-            //}
-            //else
-            //{
-            //    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseData);
-            //    List<JArray> errorList = (deserializedResponse!["errors"] as JObject)?.Properties().Select(item => (JArray)item.Value).ToList() ?? new List<JArray>();
-            //    List<string> errorStrings = errorList.Select(error => error.Last!.ToString()).ToList();
+            if (response.IsSuccessStatusCode)
+            {
+                ResponseText = "User Created Successfuly";
+            }
+            else
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseData);
+                List<JArray> errorList = (deserializedResponse!["errors"] as JObject)?.Properties().Select(item => (JArray)item.Value).ToList() ?? new List<JArray>();
+                List<string> errorStrings = errorList.Select(error => error.Last!.ToString()).ToList();
 
-            //    errorStrings.ForEach(x => MessageBox.Show(x));
-            //}
-
-
+                errorStrings.ForEach(x => ResponseText += x + "\r\n");
+            }
         }
 
         private async void Register()
         {
-            await PostRequest();
+            await RegisterNewUser();
         }
 
         private void CloseRegistration()
