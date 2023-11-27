@@ -5,14 +5,16 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace GameShopAPP.Services
 {
     public interface IUserApiRequest
     {
-        Task<HttpResponseMessage> PostRequest(User user);
-        Task<HttpResponseMessage> GetRequest(int userID);
-        Task<HttpResponseMessage> PutRequest(int userID, User user);
-        Task<HttpResponseMessage> DeleteRequest(int userID);
+        Task<HttpResponseMessage> PostUserRequest(User user);
+        Task<HttpResponseMessage> GetUserRequest(int userID);
+        Task<HttpResponseMessage> PutUserRequest(int userID, User user);
+        Task<HttpResponseMessage> PutUserLogoRequest(int userID, BitmapImage bitmapImage);
+        Task<HttpResponseMessage> DeleteUserRequest(int userID);
     }
 }

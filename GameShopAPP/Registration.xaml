@@ -24,7 +24,7 @@
             <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.login, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,20"></TextBox>
      
             <Label Content="Password" HorizontalAlignment="Center" ></Label>
-            <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.passwordHash, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,20"></TextBox>
+            <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.password, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,20"></TextBox>
    
             <Label Content="Nickname" HorizontalAlignment="Center" ></Label>
             <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.nickname, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,20"></TextBox>
@@ -32,6 +32,8 @@
             <Label Content="Email (optional)" HorizontalAlignment="Center" ></Label>
             <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.email, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"  Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,10"></TextBox>
             <Label Content="{Binding ResponseText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></Label>
+
+            <Image x:Name="logo" Width="50" Source="C:\Users\User\Desktop\pira.jpg"></Image>
         </StackPanel>
         
         <Grid Grid.Row="1" Margin="0,0,0,10">

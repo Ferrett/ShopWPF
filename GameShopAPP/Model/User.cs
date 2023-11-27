@@ -13,7 +13,7 @@ namespace GameShopAPP.Model
     {
         private int _id { get; set; }
         private string _login { get; set; } = null!;
-        private string _passwordHash { get; set; } = null!;
+        private string _password { get; set; } = null!;
         private string _nickname { get; set; } = null!;
         private string? _avatarURL { get; set; } 
         private string? _email { get; set; }
@@ -37,12 +37,12 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("login");
             }
         }
-        public string passwordHash
+        public string password
         {
-            get { return _passwordHash; }
+            get { return _password; }
             set
             {
-                _passwordHash = value;
+                _password = value;
                 OnPropertyChanged("passwordHash");
             }
         }

@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace GameShopAPP.ViewModel
 {
@@ -75,24 +76,38 @@ namespace GameShopAPP.ViewModel
 
         public async Task RegisterNewUser()
         {
-            ResponseText = string.Empty;
-            IsLoading = true;
-            var response = await userApiRequest.PostRequest(user);
-            IsLoading = false;
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                ResponseText = "User Created Successfuly";
-            }
-            else
-            {
-                var responseData = await response.Content.ReadAsStringAsync();
-                var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseData);
-                List<JArray> errorList = (deserializedResponse!["errors"] as JObject)?.Properties().Select(item => (JArray)item.Value).ToList() ?? new List<JArray>();
-                List<string> errorStrings = errorList.Select(error => error.Last!.ToString()).ToList();
+                ResponseText = string.Empty;
+                IsLoading = true;
+                var response = await userApiRequest.PostUserRequest(user);
+                //var response = await userApiRequest.GetUserRequest(99);
+                //var response = await userApiRequest.PutUserRequest(1,user);
+                //var response = await userApiRequest.DeleteUserRequest(5);
 
-                errorStrings.ForEach(x => ResponseText += x + "\r\n");
+                var response2 = await userApiRequest.PutUserLogoRequest(4, new BitmapImage(new Uri(@"C:\Users\User\Desktop\pira.jpg")));
+                IsLoading = false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    ResponseText = "Successfuly";
+                }
+                else
+                {
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseData);
+                    List<JArray> errorList = (deserializedResponse!["errors"] as JObject)?.Properties().Select(item => (JArray)item.Value).ToList() ?? new List<JArray>();
+                    List<string> errorStrings = errorList.Select(error => error.Last!.ToString()).ToList();
+
+                    errorStrings.ForEach(x => ResponseText += x + "\r\n");
+                }
             }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private async void Register()
