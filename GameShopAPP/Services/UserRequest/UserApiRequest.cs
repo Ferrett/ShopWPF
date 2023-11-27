@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.Logic
+namespace GameShopAPP.Services.UserRequest
 {
     public class UserApiRequest : IUserApiRequest
     {

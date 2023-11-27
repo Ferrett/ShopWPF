@@ -15,13 +15,10 @@ namespace GameShopAPP.Services
 
         static ApiConfig()
         {
-
             string json = File.ReadAllText("appsettings.json");
             dynamic jsonObj = JsonConvert.DeserializeObject(json)!;
 
-            // Extract the value associated with the "ApiUrl" key
-            string apiUrl = jsonObj.ApiUrl;
-            ApiURL = apiUrl;
+            ApiURL = jsonObj.ApiUrl;
         }
     }
 }

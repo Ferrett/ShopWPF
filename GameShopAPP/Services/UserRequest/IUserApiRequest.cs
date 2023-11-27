@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.Services
+namespace GameShopAPP.Services.UserRequest
 {
     public interface IUserApiRequest
     {

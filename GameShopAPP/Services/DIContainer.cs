@@ -1,4 +1,5 @@
 ﻿using GameShopAPP.Logic;
+using GameShopAPP.Services.UserRequest;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
