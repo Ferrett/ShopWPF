@@ -13,6 +13,7 @@ namespace GameShopAPP.Services.DeveloperRequest
     {
         Task<HttpResponseMessage> PostDeveloperRequest(Developer developer);
         Task<HttpResponseMessage> GetDeveloperRequest(int developerID);
+        Task<HttpResponseMessage> GetAllDevelopersRequest();
         Task<HttpResponseMessage> PutDeveloperRequest(int developerID, Developer developer);
         Task<HttpResponseMessage> PutDeveloperLogoRequest(int developerID, BitmapImage bitmapImage);
         Task<HttpResponseMessage> DeleteDeveloperRequest(int developerID);

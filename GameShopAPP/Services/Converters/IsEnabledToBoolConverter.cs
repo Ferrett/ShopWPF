@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
 
-namespace GameShopAPP.Services
+namespace GameShopAPP.Services.Converters
 {
     [ValueConversion(typeof(object), typeof(bool))]
     class IsEnabledToBoolConverter : IValueConverter

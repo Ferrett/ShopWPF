@@ -13,6 +13,7 @@ namespace GameShopAPP.Services.UserRequest
     {
         Task<HttpResponseMessage> PostUserRequest(User user);
         Task<HttpResponseMessage> GetUserRequest(int userID);
+        Task<HttpResponseMessage> GetAllUsersRequest();
         Task<HttpResponseMessage> PutUserRequest(int userID, User user);
         Task<HttpResponseMessage> PutUserLogoRequest(int userID, BitmapImage bitmapImage);
         Task<HttpResponseMessage> DeleteUserRequest(int userID);

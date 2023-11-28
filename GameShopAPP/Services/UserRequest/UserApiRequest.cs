@@ -71,6 +71,21 @@ namespace GameShopAPP.Services.UserRequest
             }
         }
 
+        public async Task<HttpResponseMessage> GetAllUsersRequest()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                {
+                    return await client.GetAsync(client.BaseAddress + $"User/GetAllUsers");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<HttpResponseMessage> PutUserRequest(int userID, User user)
         {
             try
@@ -131,7 +146,7 @@ namespace GameShopAPP.Services.UserRequest
             using (MemoryStream stream = new MemoryStream())
             {
                 BitmapEncoder encoder = new PngBitmapEncoder();
-                
+
                 encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
                 encoder.Save(stream);
 

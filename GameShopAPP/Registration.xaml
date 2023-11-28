@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameShopAPP"
-        xmlns:cnv="clr-namespace:GameShopAPP.Services"
+        xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
         mc:Ignorable="d"
         Title="Registration" Height="455" Width="400">
 
@@ -33,7 +33,6 @@
             <TextBox IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}"  Text="{Binding User.email, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"  Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,7,0,10"></TextBox>
             <Label Content="{Binding ResponseText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></Label>
 
-            <Image x:Name="logo" Width="50" Source="C:\Users\User\Desktop\pira.jpg"></Image>
         </StackPanel>
         
         <Grid Grid.Row="1" Margin="0,0,0,10">

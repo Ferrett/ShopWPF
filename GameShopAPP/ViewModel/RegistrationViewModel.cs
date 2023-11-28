@@ -81,12 +81,13 @@ namespace GameShopAPP.ViewModel
             {
                 ResponseText = string.Empty;
                 IsLoading = true;
-                var response = await userApiRequest.PostUserRequest(user);
+                //var response = await userApiRequest.PostUserRequest(user);
+                //var response = await userApiRequest.GetAllUsersRequest();
                 //var response = await userApiRequest.GetUserRequest(99);
-                //var response = await userApiRequest.PutUserRequest(1,user);
+                var response = await userApiRequest.PutUserRequest(1,user);
                 //var response = await userApiRequest.DeleteUserRequest(5);
 
-                var response2 = await userApiRequest.PutUserLogoRequest(4, new BitmapImage(new Uri(@"C:\Users\User\Desktop\pira.jpg")));
+                //var response2 = await userApiRequest.PutUserLogoRequest(4, new BitmapImage(new Uri(@"C:\Users\User\Desktop\pira.jpg")));
                 IsLoading = false;
 
                 if (response.IsSuccessStatusCode)

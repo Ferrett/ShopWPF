@@ -11,10 +11,11 @@ namespace GameShopAPP.Services.GameRequest
 {
     public interface IGameApiRequest
     {
-        Task<HttpResponseMessage> PostDeveloperRequest(Developer developer);
-        Task<HttpResponseMessage> GetDeveloperRequest(int developerID);
-        Task<HttpResponseMessage> PutDeveloperRequest(int developerID, Developer developer);
-        Task<HttpResponseMessage> PutDeveloperLogoRequest(int developerID, BitmapImage bitmapImage);
-        Task<HttpResponseMessage> DeleteDeveloperRequest(int developerID);
+        Task<HttpResponseMessage> PostGameRequest(Game game);
+        Task<HttpResponseMessage> GetGameRequest(int gameID);
+        Task<HttpResponseMessage> GetAllGamesRequest();
+        Task<HttpResponseMessage> PutGameRequest(int gameID, Game game);
+        Task<HttpResponseMessage> PutGameLogoRequest(int gameID, BitmapImage bitmapImage);
+        Task<HttpResponseMessage> DeleteGameRequest(int gameID);
     }
 }
