@@ -6,28 +6,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameShopAPP.Model
+namespace GameShopAPP.Model.ServiceModels
 {
-    [Serializable]
-    public record User : INotifyPropertyChanged
-    {
-        private int _id { get; set; }
-        private string _login { get; set; } = null!;
-        private string _passwordHash { get; set; } = null!;
-        private string _nickname { get; set; } = null!;
-        private string? _avatarURL { get; set; } 
-        private string? _email { get; set; }
-        private DateTime _creationDate { get; set; }
 
-        public int id
-        {
-            get { return _id; }
-            set
-            {
-                _id = value;
-                OnPropertyChanged("id");
-            }
-        }
+    [Serializable]
+    public class RegistrationModel : INotifyPropertyChanged
+    {
+        private string _login { get; set; } = null!;
+        private string _password { get; set; } = null!;
+        private string _nickname { get; set; } = null!;
+        private string? _email { get; set; }
+
         public string login
         {
             get { return _login; }
@@ -37,13 +26,13 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("login");
             }
         }
-        public string passwordHash
+        public string password
         {
-            get { return _passwordHash; }
+            get { return _password; }
             set
             {
-                _passwordHash = value;
-                OnPropertyChanged("passwordHash");
+                _password = value;
+                OnPropertyChanged("password");
             }
         }
         public string nickname
@@ -55,15 +44,6 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("nickname");
             }
         }
-        public string? avatarURL
-        {
-            get { return _avatarURL; }
-            set
-            {
-                _avatarURL = value;
-                OnPropertyChanged("avatarURL");
-            }
-        }
         public string? email
         {
             get { return _email; }
@@ -73,17 +53,8 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("email");
             }
         }
-        public DateTime creationDate
-        {
-            get { return _creationDate; }
-            set
-            {
-                _creationDate = value;
-                OnPropertyChanged("creationDate");
-            }
-        }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

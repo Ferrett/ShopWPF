@@ -1,5 +1,4 @@
-﻿using GameShopAPP.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace GameShopAPP
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ShopPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ShopPage : Page
     {
-        public MainWindow()
+        public ShopPage()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }
