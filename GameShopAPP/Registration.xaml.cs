@@ -1,5 +1,8 @@
 ﻿using GameShopAPP.Services;
-using GameShopAPP.Services.UserRequest;
+using GameShopAPP.Services.Requests.AuthenticationRequest;
+using GameShopAPP.Services.Requests.UserRequest;
+using GameShopAPP.Services.Validation.LoginValidation;
+using GameShopAPP.Services.Validation.RegistrationValidation;
 using GameShopAPP.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,19 +22,21 @@ using System.Windows.Shapes;
 namespace GameShopAPP
 {
     /// <summary>
-    /// Interaction logic for Registration.xaml
+    /// Interaction logic for RegistrationValidation.xaml
     /// </summary>
     public partial class Registration : Window
     {
-        private RegistrationViewModel _viewModel;
+        private RegistrationViewModel registrationViewModel;
         public Registration()
         {
             InitializeComponent();
-            _viewModel = new RegistrationViewModel(DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>());
+            registrationViewModel = new RegistrationViewModel(
+                DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
+                DIContainer.ServiceProvider.GetRequiredService<IRegistrationModelValidation>());
 
-            _viewModel!.RequestClose += (sender, args) => Close();
+            registrationViewModel!.RequestClose += (sender, args) => Close();
 
-            this.DataContext = _viewModel;
+            this.DataContext = registrationViewModel;
         }
     }
 }
