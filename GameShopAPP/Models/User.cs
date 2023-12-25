@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameShopAPP.Model
+namespace GameShopAPP.Models
 {
     [Serializable]
     public record User : INotifyPropertyChanged

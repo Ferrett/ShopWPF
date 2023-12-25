@@ -1,4 +1,8 @@
-﻿using System;
+﻿using GameShopAPP.Services.Requests;
+using GameShopAPP.Services.Validation;
+using GameShopAPP.Services;
+using GameShopAPP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +16,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace GameShopAPP
+namespace GameShopAPP.Views
 {
     /// <summary>
-    /// Interaction logic for ShopPage.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class ShopPage : Page
+    public partial class LoginView : UserControl
     {
-        public ShopPage()
+        public LoginView()
         {
             InitializeComponent();
         }

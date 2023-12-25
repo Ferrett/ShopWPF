@@ -1,4 +1,4 @@
-﻿using GameShopAPP.Model;
+﻿using GameShopAPP.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.Services.Requests.UserRequest
+namespace GameShopAPP.Services.Requests
 {
     public class UserApiRequest : IUserApiRequest
     {
@@ -35,6 +35,7 @@ namespace GameShopAPP.Services.Requests.UserRequest
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
                 {
+                    
                     string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
 
                     string postData = $"{{" +
@@ -70,12 +71,13 @@ namespace GameShopAPP.Services.Requests.UserRequest
             }
         }
 
-        public async Task<HttpResponseMessage> GetAllUsersRequest()
+        public async Task<HttpResponseMessage> GetAllUsersRequest(string jwtToken)
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtToken}");
                     return await client.GetAsync(client.BaseAddress + $"User/GetAllUsers");
                 }
             }

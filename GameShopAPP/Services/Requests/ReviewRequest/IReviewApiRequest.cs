@@ -1,4 +1,4 @@
-﻿using GameShopAPP.Model;
+﻿using GameShopAPP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.Services.Requests.ReviewRequest
+namespace GameShopAPP.Services.Requests
 {
     public interface IReviewApiRequest
     {

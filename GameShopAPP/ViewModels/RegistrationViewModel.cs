@@ -1,11 +1,11 @@
-﻿using GameShopAPP.Logic;
-using GameShopAPP.Model;
-using GameShopAPP.Model.ServiceModels;
+﻿using GameShopAPP.Models;
+using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
-using GameShopAPP.Services.Requests.AuthenticationRequest;
-using GameShopAPP.Services.Requests.UserRequest;
-using GameShopAPP.Services.Validation.LoginValidation;
-using GameShopAPP.Services.Validation.RegistrationValidation;
+using GameShopAPP.Services.Navigation;
+using GameShopAPP.Services.Requests;
+using GameShopAPP.Services.Validation;
+using GameShopAPP.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,21 +18,22 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.ViewModel
+namespace GameShopAPP.ViewModels
 {
-    public class RegistrationViewModel : INotifyPropertyChanged
+    public class RegistrationViewModel : ViewModelBase
     {
-        public RelayCommand BackCommand { get; }
+
         public RelayCommand RegisterCommand { get; }
 
-        public event EventHandler RequestClose;
-        private readonly IAuthenticationApiRequest authenticationApiRequest;
-        private readonly IRegistrationModelValidation registrationModelValidation;
+        public ICommand NavigateLoginCommand { get; }
+        private readonly IAuthenticationApiRequest _authenticationApiRequest;
+        private readonly IRegistrationModelValidation _registrationModelValidation;
 
-        private Model.ServiceModels.RegistrationModel _registrationModel;
-        public Model.ServiceModels.RegistrationModel RegistrationModel
+        private RegistrationModel _registrationModel;
+        public RegistrationModel RegistrationModel
         {
             get { return _registrationModel; }
             set
@@ -64,16 +65,23 @@ namespace GameShopAPP.ViewModel
             }
         }
 
-        public RegistrationViewModel(IAuthenticationApiRequest _authenticationApiRequest, IRegistrationModelValidation _registrationModelValidation)
+        public RegistrationViewModel(IAuthenticationApiRequest authenticationApiRequest, IRegistrationModelValidation registrationModelValidation, NavigationStore navigationStore)
         {
-            authenticationApiRequest = _authenticationApiRequest;
-            registrationModelValidation = _registrationModelValidation;
-            RegistrationModel = new Model.ServiceModels.RegistrationModel();
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationStore, () => new LoginViewModel(
+            DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
+            DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>(),
+            DIContainer.ServiceProvider.GetRequiredService<ILoginModelValidation>(),
+            DIContainer.ServiceProvider.GetRequiredService<IUserValidation>(),
+            navigationStore));
+
+            _authenticationApiRequest = authenticationApiRequest;
+            _registrationModelValidation = registrationModelValidation;
+            RegistrationModel = new RegistrationModel();
 
             IsLoading = false;
             ResponseText = string.Empty;
 
-            BackCommand = new RelayCommand(CloseRegistration);
+
             RegisterCommand = new RelayCommand(Register);
         }
 
@@ -81,14 +89,14 @@ namespace GameShopAPP.ViewModel
         {
             try
             {
-                var validationResult = registrationModelValidation.Validate(RegistrationModel);
+                var validationResult = _registrationModelValidation.Validate(RegistrationModel);
                 if (validationResult.result == false)
                 {
                     ResponseText = validationResult.errorMessage;
                     return;
                 }
 
-                var response = await authenticationApiRequest.RegisterNewUser(RegistrationModel);
+                var response = await _authenticationApiRequest.RegisterNewUser(RegistrationModel);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -108,8 +116,6 @@ namespace GameShopAPP.ViewModel
             }
         }
 
-
-
         private async void Register()
         {
             IsLoading = true;
@@ -118,29 +124,6 @@ namespace GameShopAPP.ViewModel
             await RegisterNewUser();
 
             IsLoading = false;
-        }
-
-        private void CloseRegistration()
-        {
-            CloseWindow();
-        }
-        private void OnRequestClose()
-        {
-            RequestClose?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void CloseWindow()
-        {
-            OnRequestClose();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

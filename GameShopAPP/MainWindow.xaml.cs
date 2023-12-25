@@ -1,6 +1,6 @@
-﻿using GameShopAPP.Services.Requests.UserRequest;
+﻿using GameShopAPP.Services.Requests;
 using GameShopAPP.Services;
-using GameShopAPP.ViewModel;
+using GameShopAPP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Extensions.DependencyInjection;
-using GameShopAPP.Services.Validation.LoginValidation;
-using GameShopAPP.Services.Requests.AuthenticationRequest;
+
+using GameShopAPP.Services.Validation;
+using GameShopAPP.Services.Navigation;
 
 namespace GameShopAPP
 {
@@ -31,11 +32,18 @@ namespace GameShopAPP
         {
             InitializeComponent();
 
-            mainViewModel = new MainViewModel(
-                DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
-                DIContainer.ServiceProvider.GetRequiredService<ILoginModelValidation>());
+            NavigationStore navigationStore = new NavigationStore();
 
+            navigationStore.CurrentViewModel = new LoginViewModel(
+             DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
+             DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>(),
+             DIContainer.ServiceProvider.GetRequiredService<ILoginModelValidation>(),
+             DIContainer.ServiceProvider.GetRequiredService<IUserValidation>(),
+             navigationStore);
+
+            mainViewModel = new MainViewModel(navigationStore);
             this.DataContext = mainViewModel;
         }
+
     }
 }

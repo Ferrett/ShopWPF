@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace GameShopAPP.Logic
+namespace GameShopAPP.Services
 {
     public class RelayCommand : ICommand
     {

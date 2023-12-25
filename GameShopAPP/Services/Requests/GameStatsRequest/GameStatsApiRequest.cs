@@ -1,4 +1,4 @@
-﻿using GameShopAPP.Model;
+﻿using GameShopAPP.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace GameShopAPP.Services.Requests.GameStatsRequest
+namespace GameShopAPP.Services.Requests
 {
     public class GameStatsApiRequest : IGameStatsApiRequest
     {

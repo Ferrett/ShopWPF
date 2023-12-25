@@ -1,4 +1,4 @@
-﻿using GameShopAPP.Model;
+﻿using GameShopAPP.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameShopAPP.Services.Requests.ReviewRequest
+namespace GameShopAPP.Services.Requests
 {
     public class ReviewApiRequest : IReviewApiRequest
     {

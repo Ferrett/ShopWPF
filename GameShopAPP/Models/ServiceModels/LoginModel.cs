@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameShopAPP.Model.ServiceModels
+namespace GameShopAPP.Models.ServiceModels
 {
     [Serializable]
     public class LoginModel : INotifyPropertyChanged

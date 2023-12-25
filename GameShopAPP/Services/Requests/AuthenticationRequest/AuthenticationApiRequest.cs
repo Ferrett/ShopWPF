@@ -1,5 +1,5 @@
-﻿using GameShopAPP.Model;
-using GameShopAPP.Model.ServiceModels;
+﻿using GameShopAPP.Models;
+using GameShopAPP.Models.ServiceModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameShopAPP.Services.Requests.AuthenticationRequest
+namespace GameShopAPP.Services.Requests
 {
     public class AuthenticationApiRequest : IAuthenticationApiRequest
     {
@@ -19,7 +19,7 @@ namespace GameShopAPP.Services.Requests.AuthenticationRequest
             BaseUrl = ApiConfig.ApiURL;
         }
 
-        public async Task<HttpResponseMessage> RegisterNewUser(Model.ServiceModels.RegistrationModel registrationModel)
+        public async Task<HttpResponseMessage> RegisterNewUser(RegistrationModel registrationModel)
         {
             try
             {
