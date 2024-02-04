@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="GameShopAPP.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GameShopAPP.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="900">
+    <Grid>
+        <Grid Background="LightGray">
+
+
+            <StackPanel>
+                <Separator Background="Black"></Separator>
+                <Label HorizontalAlignment="Center" Content="HOME"></Label>
+                <Separator Background="Black"></Separator>
+                <StackPanel>
+                    <Grid Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding TestCommand}" Height="70" Width="70"></Button>
+                            <TextBlock FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="GAMENAME"></TextBlock>
+                            <TextBlock FontSize="13" VerticalAlignment="Center" Margin="50,0,0,0" TextAlignment="Center" Text="Hours played:&#x0a;228"></TextBlock>
+                            <TextBlock FontSize="13" VerticalAlignment="Center" Margin="30,0,0,0" TextAlignment="Center" Text="Achievements gotten:&#x0a;228/229"></TextBlock>
+                           
+                        </StackPanel>
+                        <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                            <Button Background="Lime" Margin="10,0,10,0" Height="50" Width="70" HorizontalAlignment="Right">
+                                <Border >
+                                    <Image Source="..\Resources\play.png" Stretch="Uniform"/>
+                                </Border>
+                            </Button>
+                            <Button Background="Cyan" HorizontalAlignment="Right" Height="50" Width="70">
+                                <Border >
+                                    <Image Source="..\Resources\achievement.png" Stretch="Uniform"/>
+                                </Border>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

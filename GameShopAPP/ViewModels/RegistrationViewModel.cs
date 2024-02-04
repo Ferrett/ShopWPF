@@ -25,7 +25,6 @@ namespace GameShopAPP.ViewModels
 {
     public class RegistrationViewModel : ViewModelBase
     {
-
         public RelayCommand RegisterCommand { get; }
 
         public ICommand NavigateLoginCommand { get; }
@@ -80,7 +79,6 @@ namespace GameShopAPP.ViewModels
 
             IsLoading = false;
             ResponseText = string.Empty;
-
 
             RegisterCommand = new RelayCommand(Register);
         }

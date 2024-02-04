@@ -1,0 +1,74 @@
+﻿<Window x:Class="GameShopAPP.ShopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameShopAPP"
+        xmlns:viewmodels="clr-namespace:GameShopAPP.ViewModels"
+        xmlns:views="clr-namespace:GameShopAPP.Views"
+        mc:Ignorable="d"
+        Title="ShopWindow" Height="450" Width="800"  MinWidth="680">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Define a row for the button -->
+            <RowDefinition Height="*"/>
+            <!-- Define a row for the content -->
+        </Grid.RowDefinitions>
+
+        <!-- Button -->
+        <Grid Grid.Row="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" MinWidth="400">
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding NavigateSearchCommand}" Width="25" Height="25" HorizontalAlignment="Left" Margin="10,0,10,0">
+                        <Border Background="White">
+                            <Image Source="Resources/home.jpg" Stretch="Fill"/>
+                        </Border>
+                    </Button>
+                    <Grid>
+                        <Rectangle Width="379" Height="25" HorizontalAlignment="Left" Fill="Black"></Rectangle>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox HorizontalAlignment="Left" Margin="3,0,3,0" Width="350" Height="20" Text="Search..."></TextBox>
+                            <Button Width="20" Height="20">
+                                <Border Background="White">
+                                    <Image Source="Resources/search.jpg" Stretch="Fill"/>
+                                </Border>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Margin="10" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="1">
+                <Label VerticalAlignment="Center" Foreground="Green" Content="0$" Margin="20,0,10,0"></Label>
+                <Grid>
+                    <Ellipse Width="45" Height="45" Fill="Cyan"/>
+                    <Image Source="C:\Users\User\Desktop\goes hard af\9.9of10\1.jpg" Width="40" Height="40">
+                        <Image.Clip>
+                            <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20"/>
+                        </Image.Clip>
+                    </Image>
+                </Grid>
+                <TextBlock VerticalAlignment="Center" Foreground="DarkBlue" Text="vovka_prikhod" Margin="20,0,0,0" TextDecorations="Baseline"></TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                    <views:HomeView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:SearchViewModel}">
+                    <views:SearchView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+    </Grid>
+</Window>

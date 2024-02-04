@@ -20,11 +20,8 @@ namespace GameShopAPP
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-          
-
             DIContainer.Initialize();
             base.OnStartup(e);
-
         }
     }
 }

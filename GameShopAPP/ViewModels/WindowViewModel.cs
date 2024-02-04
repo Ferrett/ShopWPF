@@ -16,11 +16,11 @@ using System.Windows.Navigation;
 
 namespace GameShopAPP.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class WindowViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public MainViewModel(NavigationStore navigationStore)
+        public WindowViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
 

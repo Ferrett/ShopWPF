@@ -78,7 +78,6 @@ namespace GameShopAPP.ViewModels
             }
         }
         
-
        
         public LoginViewModel(IAuthenticationApiRequest authenticationApiRequest, IUserApiRequest userApiRequest, ILoginModelValidation loginModelValidation, IUserValidation userValidation, NavigationStore navigationStore)
         {
@@ -92,17 +91,13 @@ namespace GameShopAPP.ViewModels
             _userValidation = userValidation;
             _userApiRequest = userApiRequest;
             
-
             LoginModel = new LoginModel();
 
             IsLoading = false;
             ResponseText = string.Empty;
 
-            
             LogInCommand = new RelayCommand(LogIn);
             TestCommand = new RelayCommand(Test2);
-
-
 
             token = string.Empty;
         }
@@ -190,6 +185,10 @@ namespace GameShopAPP.ViewModels
                     var responseData = await response.Content.ReadAsStringAsync();
                     var deserializedResponse = JsonConvert.DeserializeObject<TokenData>(responseData);
                     token = deserializedResponse!.Token;
+
+                    ShopWindow a = new ShopWindow();
+                    Application.Current.MainWindow.Close();
+                    a.Show();
                 }
                 else
                 {
@@ -204,9 +203,5 @@ namespace GameShopAPP.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
-
-       
     }
-
-
 }

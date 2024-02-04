@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameShopAPP.Services.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 
 namespace GameShopAPP.Services
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand : CommandBase
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
@@ -22,7 +23,7 @@ namespace GameShopAPP.Services
 
         public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
 
-        public void Execute(object parameter) => _execute();
+        public override void Execute(object parameter) => _execute();
 
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }

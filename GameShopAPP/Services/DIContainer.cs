@@ -19,8 +19,13 @@ namespace GameShopAPP.Services
             var services = new ServiceCollection();
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<ShopWindow>();
             services.AddSingleton<LoginView>();
             services.AddSingleton<RegistrationView>();
+            services.AddSingleton<HomeView>();
+            services.AddSingleton<SearchView>();
+            services.AddSingleton<GameView>();
+            services.AddSingleton<ProfileView>();
 
             services.AddSingleton<IAuthenticationApiRequest, AuthenticationApiRequest>();
             services.AddSingleton<IDeveloperApiRequest, DeveloperApiRequest>();
