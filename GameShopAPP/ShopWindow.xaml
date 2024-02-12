@@ -12,9 +12,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Define a row for the button -->
             <RowDefinition Height="*"/>
-            <!-- Define a row for the content -->
         </Grid.RowDefinitions>
 
         <!-- Button -->

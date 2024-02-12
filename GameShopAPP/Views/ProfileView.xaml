@@ -8,7 +8,47 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProfileView">
 
-    <Grid>
-        
+    <Grid Background="DarkGray">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Column="0" Margin="0,20,0,0">
+             
+                <Grid Background="Cyan" Width="170" Height="170">
+                    <Image Source="../Resources/play.png"></Image>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Width="80" Height="40" Margin="5,0,5,0" Content="Delete PFP" Background="red"></Button>
+                    <Button Width="80" Height="40" Margin="5,0,5,0" Content="Change PFP"></Button>
+                </StackPanel>
+
+                <TextBlock FontSize="13" Margin="0,50,0,0" TextAlignment="Center">
+                    <Run Text="Account created:&#x0a;" />
+                    <Run Text="21/01/2001" FontSize="16" />
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0,15,0,0">
+                <TextBlock Text="Login" Margin="0,0,0,10" TextAlignment="Center"></TextBlock>
+                <TextBox Width="200"></TextBox>
+                <TextBlock Margin="0,40,0,10" Text="Password" TextAlignment="Center"></TextBlock>
+                <TextBox Width="200"></TextBox>
+                <TextBlock Margin="0,40,0,10" Text="Nickname" TextAlignment="Center"></TextBlock>
+                <TextBox Width="200"></TextBox>
+                <TextBlock Margin="0,40,0,10" Text="Email" TextAlignment="Center"></TextBlock>
+                <TextBox Width="200"></TextBox>
+            </StackPanel>
+            <Button Grid.Row="1" Grid.ColumnSpan="2" Width="120" Height="40" Content="Save changes"></Button>
+        </Grid>
+
     </Grid>
 </Page>
