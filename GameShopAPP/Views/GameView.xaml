@@ -9,6 +9,49 @@
       Title="GameView">
 
     <Grid>
-        
+        <Grid Background="LightGray">
+            <StackPanel>
+                <Separator Background="Black"></Separator>
+                <Label HorizontalAlignment="Center" Content="GAME NAME" FontSize="20"></Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Width="200" Height="200" Grid.Column="0" Grid.Row="0">
+                        <Image Source="../Resources/home.jpg"></Image>
+                    </Grid>
+                    
+                    <StackPanel Grid.Column="1" Grid.Row="0">
+                        <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
+                            <Run Text="Release Date:&#x0a;" />
+                            <Run Text="21/01/2001" FontSize="20" />
+                        </TextBlock>
+                        <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
+                            <Run Text="Developer:&#x0a;" />
+                            <Run Text="Volvo" FontSize="20" />
+                        </TextBlock>
+                    </StackPanel>
+
+                    <Separator Grid.ColumnSpan="2" Grid.Row="1" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
+                    
+                    <StackPanel Grid.Column="0" Grid.Row="2" >
+                        <Button Width="90" Height="50" Content="BUY"></Button>
+                    </StackPanel>
+                    
+                    <Separator Grid.ColumnSpan="2" Grid.Row="3" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
+                    
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
