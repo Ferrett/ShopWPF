@@ -5,53 +5,104 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GameShopAPP.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="650" d:DesignWidth="800"
       Title="GameView">
 
     <Grid>
-        <Grid Background="LightGray">
-            <StackPanel>
-                <Separator Background="Black"></Separator>
-                <Label HorizontalAlignment="Center" Content="GAME NAME" FontSize="20"></Label>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Background="LightGray">
+                <StackPanel>
+                    <Separator Background="Black"></Separator>
+                    <Label HorizontalAlignment="Center" Content="GAME NAME" FontSize="25" Margin="0,0,0,20"></Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    
-                    <Grid Width="200" Height="200" Grid.Column="0" Grid.Row="0">
-                        <Image Source="../Resources/home.jpg"></Image>
-                    </Grid>
-                    
-                    <StackPanel Grid.Column="1" Grid.Row="0">
-                        <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
-                            <Run Text="Release Date:&#x0a;" />
-                            <Run Text="21/01/2001" FontSize="20" />
-                        </TextBlock>
-                        <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid Width="200" Height="200" Grid.Column="0" Grid.Row="0">
+                            <Border Background="White" BorderBrush="Black" BorderThickness="1" >
+                                <Image Source="../Resources/home.jpg"></Image>
+                            </Border>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel >
+                                <TextBlock FontSize="13" TextAlignment="Center">
                             <Run Text="Developer:&#x0a;" />
                             <Run Text="Volvo" FontSize="20" />
-                        </TextBlock>
-                    </StackPanel>
+                                </TextBlock>
+                                <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
+                            <Run Text="Review rating:&#x0a;" />
+                            <Run Text="96%" FontSize="20" />
+                                </TextBlock>
+                                <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
+                            <Run Text="Release date:&#x0a;" />
+                            <Run Text="21/01/2001" FontSize="20" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <Separator Grid.ColumnSpan="2" Grid.Row="1" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
 
-                    <Separator Grid.ColumnSpan="2" Grid.Row="1" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
-                    
-                    <StackPanel Grid.Column="0" Grid.Row="2" >
-                        <Button Width="90" Height="50" Content="BUY"></Button>
-                    </StackPanel>
-                    
-                    <Separator Grid.ColumnSpan="2" Grid.Row="3" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
-                    
-                </Grid>
-            </StackPanel>
-        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="99.99$" Foreground="green" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                                <Button Width="90" Height="50" Margin="30,0,0,0" Content="BUY"></Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" >
+
+                                <Border Background="Cyan" Height="50" Width="50"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                    <Image HorizontalAlignment="Right" Source="..\Resources\achievement.png" Stretch="Uniform"/>
+                                </Border>
+
+                                <TextBlock FontSize="13" TextAlignment="Center">
+                            <Run Text="Achievements:&#x0a;" />
+                            <Run Text="200" FontSize="20" />
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Grid.ColumnSpan="2" Grid.Row="3" Margin="0,15" VerticalAlignment="Top" Background="Black"></Separator>
+
+                        <Grid Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center">
+                            <StackPanel>
+                                <StackPanel Margin="0,0,0,15">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Background="Cyan" Height="70" Width="70"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                            <Image HorizontalAlignment="Right" Source="..\Resources\achievement.png" Stretch="Uniform"/>
+                                        </Border>
+                                        <TextBlock FontSize="19" Text="Nickname" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    </StackPanel>
+                                    <Border Padding="7" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" >
+                                        <TextBlock Text="fdanssssssssssssskkkkkkkkkkkfdanssssssssssssskkkkkkkkkkkkkkkkkkkkkksjsndaffdanssssssssssssskkkkkkkkkkkkkkkkkkkkkksjsndaffdanssssssssssssskkkkkkkkkkkkkkkkkkkkkksjsndaffdanssssssssssssskkkkkkkkkkkkkkkkkkkkkksjsndafkkkkkkkkkkksjsndaf" TextWrapping="Wrap" Width="500"></TextBlock>
+                                    </Border>
+                                </StackPanel>
+                                
+                            </StackPanel>
+
+                        </Grid>
+
+                        <Grid Grid.ColumnSpan="2" Grid.Row="5">
+                            <StackPanel>
+                                <Separator Background="Black"></Separator>
+                                <Button Margin="0,10,0,10" Width="120" Height="50" Content="Load more..."></Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
