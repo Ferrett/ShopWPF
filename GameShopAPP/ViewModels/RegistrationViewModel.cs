@@ -27,7 +27,7 @@ namespace GameShopAPP.ViewModels
     {
         public RelayCommand RegisterCommand { get; }
 
-        public ICommand NavigateLoginCommand { get; }
+        public NavigateCommand<LoginViewModel> NavigateLoginCommand { get; }
         private readonly IAuthenticationApiRequest _authenticationApiRequest;
         private readonly IRegistrationModelValidation _registrationModelValidation;
 
@@ -67,11 +67,10 @@ namespace GameShopAPP.ViewModels
         public RegistrationViewModel(IAuthenticationApiRequest authenticationApiRequest, IRegistrationModelValidation registrationModelValidation, NavigationStore navigationStore)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationStore, () => new LoginViewModel(
-            DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
-            DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>(),
-            DIContainer.ServiceProvider.GetRequiredService<ILoginModelValidation>(),
-            DIContainer.ServiceProvider.GetRequiredService<IUserValidation>(),
-            navigationStore));
+               
+                DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<ILoginModelValidation>(),
+                navigationStore));
 
             _authenticationApiRequest = authenticationApiRequest;
             _registrationModelValidation = registrationModelValidation;

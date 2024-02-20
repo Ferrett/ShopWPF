@@ -9,11 +9,11 @@ namespace GameShopAPP.Services.Navigation
 {
     public class NavigationStore
     {
-        public event Action CurrentViewModelChanged;
+        public event Action? CurrentViewModelChanged;
 
-        private ViewModelBase _сurrentViewModel;
+        private ViewModelBase? _сurrentViewModel;
         public ViewModelBase CurrentViewModel {
-            get => _сurrentViewModel;
+            get => _сurrentViewModel!;
             set
             {
                 _сurrentViewModel = value;

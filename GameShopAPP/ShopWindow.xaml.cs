@@ -25,7 +25,7 @@ namespace GameShopAPP
     /// </summary>
     public partial class ShopWindow : Window
     {
-        private ShopWindowViewModel windowViewModel;
+        private ShopWindowViewModel shopWindowViewModel;
         public ShopWindow()
         {
             InitializeComponent();
@@ -34,8 +34,8 @@ namespace GameShopAPP
 
             navigationStore.CurrentViewModel = new HomeViewModel(navigationStore);
 
-            windowViewModel = new ShopWindowViewModel(navigationStore);
-            this.DataContext = windowViewModel;
+            shopWindowViewModel = new ShopWindowViewModel(navigationStore);
+            this.DataContext = shopWindowViewModel;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace GameShopAPP
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WindowViewModel windowViewModel;
+        private MainWindowViewModel mainWindowViewModel;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,16 +35,15 @@ namespace GameShopAPP
             NavigationStore navigationStore = new NavigationStore();
 
             navigationStore.CurrentViewModel = new LoginViewModel(
-             DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
-             DIContainer.ServiceProvider.GetRequiredService<IUserApiRequest>(),
-             DIContainer.ServiceProvider.GetRequiredService<ILoginModelValidation>(),
-             DIContainer.ServiceProvider.GetRequiredService<IUserValidation>(),
-            navigationStore);
-            //navigationStore.CurrentViewModel = new HomeViewModel(
-            // navigationStore);
+             DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
+             DIContainer.ServiceProvider!.GetRequiredService<ILoginModelValidation>(),
+             navigationStore);
 
-            windowViewModel = new WindowViewModel(navigationStore);
-            this.DataContext = windowViewModel;
+            mainWindowViewModel = new MainWindowViewModel(
+                DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(), 
+                navigationStore);
+
+            this.DataContext = mainWindowViewModel;
         }
 
     }

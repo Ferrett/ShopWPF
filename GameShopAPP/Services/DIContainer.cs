@@ -12,7 +12,7 @@ namespace GameShopAPP.Services
 {
     public static class DIContainer
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider? ServiceProvider { get; private set; }
 
         public static void Initialize()
         {

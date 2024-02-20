@@ -25,7 +25,7 @@ namespace GameShopAPP.ViewModels
 
         private void Test2()
         {
-            int a = 0;
+            
         }
     }
 }

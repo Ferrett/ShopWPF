@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GameShopAPP.Services.Navigation
 {
@@ -21,7 +22,7 @@ namespace GameShopAPP.Services.Navigation
             _navigationStore = navigationStore;
             _createViewModel = createViewModel;
         }
-        public override void Execute(object parameter)
+        public override void Execute(object? parameter)
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }

@@ -1,5 +1,6 @@
 ﻿using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
+using GameShopAPP.Services.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,33 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace GameShopAPP.ViewModels
 {
-    public class ShopWindowViewModel : WindowViewModel
+    public class ShopWindowViewModel : ViewModelBase
     {
         public RelayCommand TestCommand { get; }
-        public ICommand NavigateSearchCommand { get; }
-        public ShopWindowViewModel(NavigationStore navigationStore):base(navigationStore) {
+        public NavigateCommand<SearchViewModel> NavigateSearchCommand { get; }
+
+        private readonly NavigationStore _navigationStore;
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+        public ShopWindowViewModel(NavigationStore navigationStore) 
+        {
             NavigateSearchCommand = new NavigateCommand<SearchViewModel>(navigationStore, () => new SearchViewModel(
               navigationStore));
-            TestCommand = new RelayCommand(Test2);
 
+            _navigationStore = navigationStore;
+
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
+            TestCommand = new RelayCommand(Test2);
         }
+
         private void Test2()
         {
-            int a = 0;
+            
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

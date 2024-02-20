@@ -23,17 +23,22 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button Command="{Binding TestCommand}" Height="70" Width="70"></Button>
+                            <Button Height="70" Width="70"></Button>
                             <TextBlock FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="GAMENAME"></TextBlock>
                         </StackPanel>
 
-                        <Grid Grid.Column="1">
-                            <TextBlock FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
-                        <Run Text="Developer:&#x0a;" />
-                        <Run Text="Steam" FontSize="16" />
-                            </TextBlock>
+                        <Grid Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
+                                    <Run Text="Developer:&#x0a;" />
+                                    <Run Text="Steam" FontSize="16" />
+                                </TextBlock>
+                                <TextBlock Margin="40,0,0,0" FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
+                                    <Run Text="Release date:&#x0a;" />
+                                    <Run Text="24.07.2003" FontSize="16" />
+                                </TextBlock>
+                            </StackPanel>
                         </Grid>
-
                         <Grid Grid.Column="2" FlowDirection="RightToLeft">
                             <TextBlock Text="$999" FontSize="22" Foreground="Lime" VerticalAlignment="Center" Margin="40,0,0,0"></TextBlock>
                         </Grid>
@@ -42,6 +47,6 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-       
+
     </Grid>
 </UserControl>

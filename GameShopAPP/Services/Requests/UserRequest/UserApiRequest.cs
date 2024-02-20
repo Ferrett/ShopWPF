@@ -62,6 +62,7 @@ namespace GameShopAPP.Services.Requests
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.GetAsync(client.BaseAddress + $"User/GetUser/{userID}");
                 }
             }
@@ -71,21 +72,6 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetAllUsersRequest(string jwtToken)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwtToken}");
-                    return await client.GetAsync(client.BaseAddress + $"User/GetAllUsers");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
 
         public async Task<HttpResponseMessage> PutUserRequest(int userID, User user)
         {

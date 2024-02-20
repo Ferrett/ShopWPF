@@ -12,18 +12,11 @@ namespace GameShopAPP.Services.Requests
 {
     public class AuthenticationApiRequest : IAuthenticationApiRequest
     {
-        private readonly string BaseUrl;
-
-        public AuthenticationApiRequest()
-        {
-            BaseUrl = ApiConfig.ApiURL;
-        }
-
         public async Task<HttpResponseMessage> RegisterNewUser(RegistrationModel registrationModel)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     string postData = $"{{" +
                         $"\"login\":\"{registrationModel.login}\"," +
@@ -45,7 +38,7 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     string postData = $"{{" +
                         $"\"login\":\"{loginModel.login}\"," +

@@ -19,19 +19,17 @@ using System.Windows.Input;
 using GameShopAPP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using GameShopAPP.Services.Navigation;
+using System.IO;
 
 namespace GameShopAPP.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
         public RelayCommand LogInCommand { get; }
-        public RelayCommand TestCommand { get; }
-        public ICommand NavigateRegistrationCommand { get; }
+        public NavigateCommand<RegistrationViewModel> NavigateRegistrationCommand { get; }
 
         private readonly IAuthenticationApiRequest _authenticationApiRequest;
         private readonly ILoginModelValidation _loginModelValidation;
-        private readonly IUserValidation _userValidation;
-        private readonly IUserApiRequest _userApiRequest;
 
         private bool _isLoading;
 
@@ -77,79 +75,28 @@ namespace GameShopAPP.ViewModels
                 OnPropertyChanged("ResponseText");
             }
         }
-        
-       
-        public LoginViewModel(IAuthenticationApiRequest authenticationApiRequest, IUserApiRequest userApiRequest, ILoginModelValidation loginModelValidation, IUserValidation userValidation, NavigationStore navigationStore)
+
+
+        public LoginViewModel(IAuthenticationApiRequest authenticationApiRequest, ILoginModelValidation loginModelValidation, NavigationStore navigationStore)
         {
-            NavigateRegistrationCommand = new NavigateCommand<RegistrationViewModel>(navigationStore,() => new RegistrationViewModel(
-                DIContainer.ServiceProvider.GetRequiredService<IAuthenticationApiRequest>(),
-                DIContainer.ServiceProvider.GetRequiredService<IRegistrationModelValidation>(),
+            NavigateRegistrationCommand = new NavigateCommand<RegistrationViewModel>(navigationStore, () => new RegistrationViewModel(
+                DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IRegistrationModelValidation>(),
                 navigationStore));
 
             _authenticationApiRequest = authenticationApiRequest;
             _loginModelValidation = loginModelValidation;
-            _userValidation = userValidation;
-            _userApiRequest = userApiRequest;
-            
+
             LoginModel = new LoginModel();
 
             IsLoading = false;
             ResponseText = string.Empty;
 
             LogInCommand = new RelayCommand(LogIn);
-            TestCommand = new RelayCommand(Test2);
-
-            token = string.Empty;
+            
         }
 
-       
-        private async void Test2()
-        {
-            await Test();
-        }
-        private string token;
-        private async Task Test()
-        {
-            try
-            {
-                User user = new User()
-                {
-                    password = "password",
-                    nickname = "username",
-                    login = "ddddddddddd"
-                };
-
-                var validationResult = _userValidation.Validate(user);
-                if (validationResult.result == false)
-                {
-                    ResponseText = validationResult.errorMessage;
-                    return;
-                }
-
-
-                var response = await _userApiRequest.GetAllUsersRequest(token);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    ResponseText = "SuccessfulyT";
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                {
-                    ResponseText = "Unauthorized";
-                }
-                else
-                {
-                    var responseData = await response.Content.ReadAsStringAsync();
-                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(responseData);
-                    List<string> errorList = deserializedResponse!.Values.First().ToList();
-                    errorList.ForEach(x => ResponseText += x + "\r\n");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+      
 
         public async void LogIn()
         {
@@ -161,9 +108,9 @@ namespace GameShopAPP.ViewModels
             IsLoading = false;
         }
 
-        public class TokenData
+        private void SaveToken(string token)
         {
-            public string Token { get; set; }
+            ApiConfig.UpdateToken(token);
         }
 
         private async Task CheckUser()
@@ -183,12 +130,13 @@ namespace GameShopAPP.ViewModels
                 {
                     ResponseText = "Successfuly";
                     var responseData = await response.Content.ReadAsStringAsync();
-                    var deserializedResponse = JsonConvert.DeserializeObject<TokenData>(responseData);
-                    token = deserializedResponse!.Token;
+                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseData);
+                    string token = deserializedResponse!.Values.First();
 
-                    ShopWindow a = new ShopWindow();
+                    SaveToken(token);
+                    ShopWindow shopWindow = new ShopWindow();
                     Application.Current.MainWindow.Close();
-                    a.Show();
+                    shopWindow.Show();
                 }
                 else
                 {
