@@ -63,7 +63,7 @@
                         <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" >
 
-                                <Border Background="Cyan" Height="50" Width="50"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                <Border Background="Cyan" Height="50" Padding="4" Width="50"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
                                     <Image HorizontalAlignment="Right" Source="..\Resources\achievement.png" Stretch="Uniform"/>
                                 </Border>
 
@@ -80,8 +80,8 @@
                             <StackPanel>
                                 <StackPanel Margin="0,0,0,15">
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Background="Cyan" Height="70" Width="70"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
-                                            <Image HorizontalAlignment="Right" Source="..\Resources\achievement.png" Stretch="Uniform"/>
+                                        <Border Background="Lime" Padding="8" Height="70" Width="70"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                            <Image HorizontalAlignment="Right" Source="..\Resources\like.png" Stretch="Uniform"/>
                                         </Border>
                                         <TextBlock FontSize="19" Text="Nickname" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                     </StackPanel>

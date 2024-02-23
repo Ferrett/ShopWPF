@@ -22,18 +22,15 @@ namespace GameShopAPP.Services
             dynamic jsonObj = JsonConvert.DeserializeObject(json)!;
 
             ApiURL = jsonObj.ApiUrl;
-            Token = jsonObj.Token;
-
-           
+            Token = jsonObj.Token;  
         }
 
         public static void UpdateToken(string token)
         {
-            string jsonContent = File.ReadAllText(ConfigPath);
-            JObject jsonObject = JObject.Parse(jsonContent);
+            JObject jsonObject = JObject.Parse(File.ReadAllText(ConfigPath));
             jsonObject["Token"] = token;
-            string newJsonContent = jsonObject.ToString();
-            File.WriteAllText(ConfigPath, newJsonContent);
+
+            File.WriteAllText(ConfigPath, jsonObject.ToString());
         }
     }
 }

@@ -39,12 +39,12 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2" FlowDirection="RightToLeft" Orientation="Horizontal">
-                            <Button Background="Lime" Margin="10,0,10,0" Height="50" Width="70" HorizontalAlignment="Right">
+                            <Button Padding="7" Background="Lime" Margin="10,0,10,0" Height="50" Width="70" HorizontalAlignment="Right">
                                 <Border >
                                     <Image Source="..\Resources\play.png" Stretch="Uniform"/>
                                 </Border>
                             </Button>
-                            <Button Background="Cyan" HorizontalAlignment="Right" Height="50" Width="70">
+                            <Button Padding="4" Background="Cyan" HorizontalAlignment="Right" Height="50" Width="70">
                                 <Border>
                                     <Image Source="..\Resources\achievement.png" Stretch="Uniform"/>
                                 </Border>

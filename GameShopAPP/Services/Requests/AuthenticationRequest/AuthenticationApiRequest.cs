@@ -1,10 +1,10 @@
 ﻿using GameShopAPP.Models;
 using GameShopAPP.Models.ServiceModels;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +18,7 @@ namespace GameShopAPP.Services.Requests
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string postData = $"{{" +
-                        $"\"login\":\"{registrationModel.login}\"," +
-                        $"\"password\":\"{registrationModel.password}\"," +
-                        $"\"nickname\":\"{registrationModel.login}\"" +
-                        $"{(string.IsNullOrEmpty(registrationModel.email) ? "" : $",\"email\":\"{registrationModel.email}\"")}}}";
-
+                    string postData = JsonSerializer.Serialize(registrationModel);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "Authentication/RegisterNewUser", content);
                 }
@@ -40,12 +35,25 @@ namespace GameShopAPP.Services.Requests
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string postData = $"{{" +
-                        $"\"login\":\"{loginModel.login}\"," +
-                        $"\"password\":\"{loginModel.password}\"}}";
-
+                    string postData = JsonSerializer.Serialize(loginModel);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "Authentication/UserLogin", content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<HttpResponseMessage> VerifyToken()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.GetAsync(client.BaseAddress + $"Authentication/VerifyToken");
                 }
             }
             catch (Exception)

@@ -12,7 +12,9 @@ namespace GameShopAPP.Services.Requests
     public interface IUserApiRequest
     {
         Task<HttpResponseMessage> PostUserRequest(User user);
+        Task<HttpResponseMessage> GetAllUsersRequest();
         Task<HttpResponseMessage> GetUserRequest(int userID);
+        Task<HttpResponseMessage> GetUserByLogin(string userLogin);
         Task<HttpResponseMessage> PutUserRequest(int userID, User user);
         Task<HttpResponseMessage> PutUserLogoRequest(int userID, BitmapImage bitmapImage);
         Task<HttpResponseMessage> DeleteUserRequest(int userID);

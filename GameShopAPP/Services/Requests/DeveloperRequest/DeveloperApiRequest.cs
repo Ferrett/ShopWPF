@@ -1,44 +1,27 @@
 ﻿using GameShopAPP.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using GameShopAPP.Models.ServiceModels;
 
 namespace GameShopAPP.Services.Requests
 {
     public class DeveloperApiRequest : IDeveloperApiRequest
     {
-        private readonly string BaseUrl;
-
-        private readonly JsonSerializerSettings SerializerSettings;
-
-        public DeveloperApiRequest()
-        {
-            BaseUrl = ApiConfig.ApiURL;
-            SerializerSettings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-ddTHH:mm:ss.fffZ" };
-        }
-
         public async Task<HttpResponseMessage> PostDeveloperRequest(Developer developer)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = string.Empty;// $"{{" +
-                    //    $"\"id\":\"0\"," +
-                    //    $"\"login\":\"{developer.login}\"," +
-                    //    $"{(String.IsNullOrEmpty(developer.password) ? "" : $"\"password\":\"{BCrypt.Net.BCrypt.HashPassword(developer.password)}\",")}" +
-                    //    $"\"nickname\":\"{developer.nickname}\"," +
-                    //    $"{(String.IsNullOrEmpty(developer.email) ? "" : $"\"email\":\"{developer.email}\",")}" +
-                    //    $"\"creationDate\":{utcNowJson}}}";
-
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string postData = JsonSerializer.Serialize(developer);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "Developer/PostDeveloper", content);
                 }
@@ -53,8 +36,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.GetAsync(client.BaseAddress + $"Developer/GetDeveloper/{developerID}");
                 }
             }
@@ -68,8 +52,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.GetAsync(client.BaseAddress + $"Developer/GetAllDevelopers");
                 }
             }
@@ -83,19 +68,11 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = string.Empty;//$"{{" +
-                                                   //$"\"id\":\"0\"," +
-                                                   //$"\"login\":\"{developer.login}\"," +
-                                                   //$"{(String.IsNullOrEmpty(developer.password) ? "" : $"\"passwordHash\":\"{BCrypt.Net.BCrypt.HashPassword(developer.password)}\",")}" +
-                                                   //$"\"nickname\":\"{developer.nickname}\"," +
-                                                   //$"{(String.IsNullOrEmpty(developer.email) ? "" : $"\"email\":\"{developer.email}\",")}" +
-                                                   //$"\"creationDate\":{utcNowJson}}}";
-
-                    StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string putData = JsonSerializer.Serialize(developer); 
+                    StringContent content = new StringContent(putData, Encoding.UTF8, "application/json");
                     return await client.PutAsync(client.BaseAddress + $"Developer/PutDeveloper/{developerID}", content);
                 }
             }
@@ -109,9 +86,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     MultipartFormDataContent multipartContent = new MultipartFormDataContent();
 
                     if (bitmapImage != null)
@@ -132,6 +109,22 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
+        public async Task<HttpResponseMessage> DeleteDeveloperRequest(int developerID)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.DeleteAsync(client.BaseAddress + $"Developer/DeleteDeveloper/{developerID}");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private byte[] ConvertBitmapImageToByteArray(BitmapImage bitmapImage)
         {
             BitmapSource bitmapSource = bitmapImage;
@@ -144,21 +137,6 @@ namespace GameShopAPP.Services.Requests
                 encoder.Save(stream);
 
                 return stream.ToArray();
-            }
-        }
-
-        public async Task<HttpResponseMessage> DeleteDeveloperRequest(int developerID)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
-                {
-                    return await client.DeleteAsync(client.BaseAddress + $"Developer/DeleteDeveloper/{developerID}");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
     }

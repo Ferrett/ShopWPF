@@ -1,53 +1,41 @@
 ﻿using GameShopAPP.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Runtime.Intrinsics.X86;
 using System.Text;
-using System.Threading;
+using System.Text.Json;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace GameShopAPP.Services.Requests
 {
     public class UserApiRequest : IUserApiRequest
     {
-        private readonly string BaseUrl;
-
-        private readonly JsonSerializerSettings SerializerSettings;
-
-        public UserApiRequest()
-        {
-            BaseUrl = ApiConfig.ApiURL;
-            SerializerSettings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-ddTHH:mm:ss.fffZ" };
-        }
-
         public async Task<HttpResponseMessage> PostUserRequest(User user)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = $"{{" +
-                        $"\"id\":\"0\"," +
-                        $"\"login\":\"{user.login}\"," +
-                        $"{(string.IsNullOrEmpty(user.password) ? "" : $"\"password\":\"{BCrypt.Net.BCrypt.HashPassword(user.password)}\",")}" +
-                        $"\"nickname\":\"{user.nickname}\"," +
-                        $"{(string.IsNullOrEmpty(user.email) ? "" : $"\"email\":\"{user.email}\",")}" +
-                        $"\"creationDate\":{utcNowJson}}}";
-
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string postData = JsonSerializer.Serialize(user);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "User/PostUser", content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllUsersRequest()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.GetAsync(client.BaseAddress + $"User/GetAllUsers");
                 }
             }
             catch (Exception)
@@ -60,7 +48,7 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.GetAsync(client.BaseAddress + $"User/GetUser/{userID}");
@@ -72,24 +60,31 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
+        public async Task<HttpResponseMessage> GetUserByLogin(string userLogin)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.GetAsync(client.BaseAddress + $"User/GetUserByLogin/{userLogin}");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task<HttpResponseMessage> PutUserRequest(int userID, User user)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = $"{{" +
-                        $"\"id\":\"0\"," +
-                        $"\"login\":\"{user.login}\"," +
-                        $"{(string.IsNullOrEmpty(user.password) ? "" : $"\"passwordHash\":\"{BCrypt.Net.BCrypt.HashPassword(user.password)}\",")}" +
-                        $"\"nickname\":\"{user.nickname}\"," +
-                        $"{(string.IsNullOrEmpty(user.email) ? "" : $"\"email\":\"{user.email}\",")}" +
-                        $"\"creationDate\":{utcNowJson}}}";
-
-                    StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string putData = JsonSerializer.Serialize(user);
+                    StringContent content = new StringContent(putData, Encoding.UTF8, "application/json");
                     return await client.PutAsync(client.BaseAddress + $"User/PutUser/{userID}", content);
                 }
             }
@@ -103,9 +98,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     MultipartFormDataContent multipartContent = new MultipartFormDataContent();
 
                     if (bitmapImage != null)
@@ -126,6 +121,22 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
+        public async Task<HttpResponseMessage> DeleteUserRequest(int userID)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.DeleteAsync(client.BaseAddress + $"User/DeleteUser/{userID}");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private byte[] ConvertBitmapImageToByteArray(BitmapImage bitmapImage)
         {
             BitmapSource bitmapSource = bitmapImage;
@@ -138,21 +149,6 @@ namespace GameShopAPP.Services.Requests
                 encoder.Save(stream);
 
                 return stream.ToArray();
-            }
-        }
-
-        public async Task<HttpResponseMessage> DeleteUserRequest(int userID)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
-                {
-                    return await client.DeleteAsync(client.BaseAddress + $"User/DeleteUser/{userID}");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
     }

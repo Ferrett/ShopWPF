@@ -12,5 +12,6 @@ namespace GameShopAPP.Services.Requests
     {
         public Task<HttpResponseMessage> RegisterNewUser(RegistrationModel registrationModel);
         public Task<HttpResponseMessage> UserLogin(LoginModel loginModel);
+        public Task<HttpResponseMessage> VerifyToken();
     }
 }

@@ -1,46 +1,45 @@
 ﻿using GameShopAPP.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace GameShopAPP.Services.Requests
 {
     public class GameStatsApiRequest : IGameStatsApiRequest
     {
-        private readonly string BaseUrl;
-
-        private readonly JsonSerializerSettings SerializerSettings;
-
-        public GameStatsApiRequest()
-        {
-            BaseUrl = ApiConfig.ApiURL;
-            SerializerSettings = new JsonSerializerSettings { DateFormatString = "yyyy-MM-ddTHH:mm:ss.fffZ" };
-        }
 
         public async Task<HttpResponseMessage> PostGameStatsRequest(GameStats gameStats)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = string.Empty;// $"{{" +
-                    //    $"\"id\":\"0\"," +
-                    //    $"\"login\":\"{gameStats.login}\"," +
-                    //    $"{(String.IsNullOrEmpty(gameStats.password) ? "" : $"\"password\":\"{BCrypt.Net.BCrypt.HashPassword(gameStats.password)}\",")}" +
-                    //    $"\"nickname\":\"{gameStats.nickname}\"," +
-                    //    $"{(String.IsNullOrEmpty(gameStats.email) ? "" : $"\"email\":\"{gameStats.email}\",")}" +
-                    //    $"\"creationDate\":{utcNowJson}}}";
-
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string postData = JsonSerializer.Serialize(gameStats);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "GameStats/PostGameStats", content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllGamesStatsRequest()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.GetAsync(client.BaseAddress + $"GameStats/GetAllGamesStats");
                 }
             }
             catch (Exception)
@@ -53,8 +52,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.GetAsync(client.BaseAddress + $"GameStats/GetGameStats/{gameStatsID}");
                 }
             }
@@ -64,13 +64,14 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetAllGamesStatsRequest()
+        public async Task<HttpResponseMessage> GetGameStatsByUserID(int userID)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    return await client.GetAsync(client.BaseAddress + $"GameStats/GetAllGamesStats");
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    return await client.GetAsync(client.BaseAddress + $"GameStats/GetGameStatsByUserID/{userID}");
                 }
             }
             catch (Exception)
@@ -78,24 +79,15 @@ namespace GameShopAPP.Services.Requests
                 throw;
             }
         }
-
         public async Task<HttpResponseMessage> PutGameStatsRequest(int gameStatsID, GameStats gameStats)
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
-                    string utcNowJson = JsonConvert.SerializeObject(DateTime.UtcNow, SerializerSettings);
-
-                    string postData = string.Empty;//$"{{" +
-                                                   //$"\"id\":\"0\"," +
-                                                   //$"\"login\":\"{gameStats.login}\"," +
-                                                   //$"{(String.IsNullOrEmpty(gameStats.password) ? "" : $"\"passwordHash\":\"{BCrypt.Net.BCrypt.HashPassword(gameStats.password)}\",")}" +
-                                                   //$"\"nickname\":\"{gameStats.nickname}\"," +
-                                                   //$"{(String.IsNullOrEmpty(gameStats.email) ? "" : $"\"email\":\"{gameStats.email}\",")}" +
-                                                   //$"\"creationDate\":{utcNowJson}}}";
-
-                    StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
+                    string putData = JsonSerializer.Serialize(gameStats); 
+                    StringContent content = new StringContent(putData, Encoding.UTF8, "application/json");
                     return await client.PutAsync(client.BaseAddress + $"GameStats/PutGameStats/{gameStatsID}", content);
                 }
             }
@@ -109,8 +101,9 @@ namespace GameShopAPP.Services.Requests
         {
             try
             {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(BaseUrl) })
+                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
                     return await client.DeleteAsync(client.BaseAddress + $"GameStats/DeleteGameStats/{gameStatsID}");
                 }
             }

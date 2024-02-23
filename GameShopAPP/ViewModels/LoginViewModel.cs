@@ -125,7 +125,7 @@ namespace GameShopAPP.ViewModels
                 }
 
                 var response = await _authenticationApiRequest.UserLogin(LoginModel);
-
+               
                 if (response.IsSuccessStatusCode)
                 {
                     ResponseText = "Successfuly";

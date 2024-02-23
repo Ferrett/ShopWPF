@@ -93,11 +93,12 @@ namespace GameShopAPP.ViewModels
                     return;
                 }
 
+                RegistrationModel.password = BCrypt.Net.BCrypt.HashPassword(RegistrationModel.password);
                 var response = await _authenticationApiRequest.RegisterNewUser(RegistrationModel);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    ResponseText = "Successfuly";
+                    ResponseText = "Account created";
                 }
                 else
                 {

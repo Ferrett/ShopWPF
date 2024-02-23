@@ -1,39 +1,26 @@
 ﻿using GameShopAPP.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace GameShopAPP.Services.Requests
 {
-    public class ReviewApiRequest : IReviewApiRequest
+    public class UserGameApiRequest : IUserGameApiRequest
     {
-        public async Task<HttpResponseMessage> PostReviewRequest(Review review)
+        public async Task<HttpResponseMessage> PostUserGameRequest(UserGame userGame)
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    string postData = JsonSerializer.Serialize(review);
+                    string postData = JsonSerializer.Serialize(userGame);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
-                    return await client.PostAsync(client.BaseAddress + "Review/PostReview", content);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public async Task<HttpResponseMessage> GetAllReviewsRequest()
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"Review/GetAllReviews");
+                    return await client.PostAsync(client.BaseAddress + "UserGame/PostUserGame", content);
                 }
             }
             catch (Exception)
@@ -42,14 +29,14 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetReviewRequest(int reviewID)
+        public async Task<HttpResponseMessage> GetAllUserGamesRequest()
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"Review/GetReview/{reviewID}");
+                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetAllUserGames");
                 }
             }
             catch (Exception)
@@ -58,14 +45,14 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetReviewsByGameID(int gameID)
+        public async Task<HttpResponseMessage> GetGamesByUserIDRequest(int userID)
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"Review/GetReviewsByGameID/{gameID}");
+                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetGamesByUserIDRequest/{userID}");
                 }
             }
             catch (Exception)
@@ -74,16 +61,14 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> PutReviewRequest(int reviewID, Review review)
+        public async Task<HttpResponseMessage> GetUsersByGameIDRequest(int gameID)
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    string putData = JsonSerializer.Serialize(review);
-                    StringContent content = new StringContent(putData, Encoding.UTF8, "application/json");
-                    return await client.PutAsync(client.BaseAddress + $"Review/PutReview/{reviewID}", content);
+                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetUsersByGameIDRequest/{gameID}");
                 }
             }
             catch (Exception)
@@ -92,14 +77,14 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> DeleteReviewRequest(int reviewID)
+        public async Task<HttpResponseMessage> DeleteUserGameRequest(int userGameID)
         {
             try
             {
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.DeleteAsync(client.BaseAddress + $"Review/DeleteReview/{reviewID}");
+                    return await client.DeleteAsync(client.BaseAddress + $"UserGame/DeleteUserGame/{userGameID}");
                 }
             }
             catch (Exception)

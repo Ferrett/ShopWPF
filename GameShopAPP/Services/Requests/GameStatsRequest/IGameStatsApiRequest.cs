@@ -12,8 +12,9 @@ namespace GameShopAPP.Services.Requests
     public interface IGameStatsApiRequest
     {
         Task<HttpResponseMessage> PostGameStatsRequest(GameStats gameStats);
-        Task<HttpResponseMessage> GetGameStatsRequest(int gameStatsID);
         Task<HttpResponseMessage> GetAllGamesStatsRequest();
+        Task<HttpResponseMessage> GetGameStatsRequest(int gameStatsID);
+        Task<HttpResponseMessage> GetGameStatsByUserID(int userID);
         Task<HttpResponseMessage> PutGameStatsRequest(int gameStatsID, GameStats gameStats);
         Task<HttpResponseMessage> DeleteGameStatsRequest(int gameStatsID);
     }

@@ -33,6 +33,7 @@ namespace GameShopAPP.Services
             services.AddSingleton<IGameStatsApiRequest, GameStatsApiRequest>();
             services.AddSingleton<IReviewApiRequest, ReviewApiRequest>();
             services.AddSingleton<IUserApiRequest, UserApiRequest>();
+            services.AddSingleton<IUserGameApiRequest, UserGameApiRequest>();
 
             services.AddSingleton<IDeveloperValidation, DeveloperValidation>();
             services.AddSingleton<IGameValidation, GameValidation>();

@@ -13,7 +13,7 @@ namespace GameShopAPP.ViewModels
 {
     public class ShopWindowViewModel : ViewModelBase
     {
-        public RelayCommand TestCommand { get; }
+        
         public NavigateCommand<SearchViewModel> NavigateSearchCommand { get; }
 
         private readonly NavigationStore _navigationStore;
@@ -27,13 +27,10 @@ namespace GameShopAPP.ViewModels
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            TestCommand = new RelayCommand(Test2);
+         
         }
 
-        private void Test2()
-        {
-            
-        }
+       
 
         private void OnCurrentViewModelChanged()
         {

@@ -26,7 +26,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Command="{Binding NavigateSearchCommand}" Width="25" Height="25" HorizontalAlignment="Left" Margin="10,0,10,0">
                         <Border Background="White">
-                            <Image Source="Resources/home.jpg" Stretch="Fill"/>
+                            <Image Source="Resources/home.png" Stretch="Fill"/>
                         </Border>
                     </Button>
                     <Grid>
@@ -35,7 +35,7 @@
                             <TextBox HorizontalAlignment="Left" Margin="3,0,3,0" Width="350" Height="20" Text="Search..."></TextBox>
                             <Button Width="20" Height="20">
                                 <Border Background="White">
-                                    <Image Source="Resources/search.jpg" Stretch="Fill"/>
+                                    <Image Source="Resources/search.png" Stretch="Fill"/>
                                 </Border>
                             </Button>
                         </StackPanel>
