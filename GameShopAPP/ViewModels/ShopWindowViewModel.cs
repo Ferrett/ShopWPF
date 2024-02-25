@@ -1,36 +1,90 @@
-﻿using GameShopAPP.Services;
+﻿using GameShopAPP.Models;
+using GameShopAPP.Models.ServiceModels;
+using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace GameShopAPP.ViewModels
 {
     public class ShopWindowViewModel : ViewModelBase
     {
-        
+
         public NavigateCommand<SearchViewModel> NavigateSearchCommand { get; }
+        public NavigateCommand<ProfileViewModel> NavigateProfileCommand { get; }
+        public NavigateCommand<LibraryViewModel> NavigateLibraryCommand { get; }
 
         private readonly NavigationStore _navigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public ShopWindowViewModel(NavigationStore navigationStore) 
+
+        public RelayCommand SearchBarFocusCommand { get; private set; }
+        private readonly IUserApiRequest _userApiRequest;
+        private User _user;
+        public User User
+        {
+            get { return _user; }
+            set
+            {
+                _user = value;
+                OnPropertyChanged("User");
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged("SearchText");
+            }
+        }
+        private ImageSource _avatarUrl;
+        public ImageSource AvatarUrl
+        {
+            get { return _avatarUrl; }
+            set
+            {
+                _avatarUrl = value;
+                OnPropertyChanged("AvatarUrl");
+            }
+        }
+        public ShopWindowViewModel(User user, NavigationStore navigationStore)
         {
             NavigateSearchCommand = new NavigateCommand<SearchViewModel>(navigationStore, () => new SearchViewModel(
               navigationStore));
 
-            _navigationStore = navigationStore;
+            NavigateProfileCommand = new NavigateCommand<ProfileViewModel>(navigationStore, () => new ProfileViewModel(
+              navigationStore));
 
+            NavigateLibraryCommand = new NavigateCommand<LibraryViewModel>(navigationStore, () => new LibraryViewModel(
+              navigationStore));
+
+            _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-         
+            User = user;
+            SearchText = "Search...";
+            AvatarUrl = new BitmapImage(new Uri(User.profilePictureURL));
+
+            SearchBarFocusCommand = new RelayCommand(SearchBarGotFocus);
         }
 
        
+        public void SearchBarGotFocus()
+        {
+            SearchText = string.Empty;
+        }
 
         private void OnCurrentViewModelChanged()
         {

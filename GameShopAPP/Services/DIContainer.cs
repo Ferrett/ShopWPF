@@ -22,7 +22,7 @@ namespace GameShopAPP.Services
             services.AddSingleton<ShopWindow>();
             services.AddSingleton<LoginView>();
             services.AddSingleton<RegistrationView>();
-            services.AddSingleton<HomeView>();
+            services.AddSingleton<LibraryView>();
             services.AddSingleton<SearchView>();
             services.AddSingleton<GameView>();
             services.AddSingleton<ProfileView>();

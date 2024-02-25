@@ -27,6 +27,7 @@ namespace GameShopAPP.Services
 
         public static void UpdateToken(string token)
         {
+            Token = token;
             JObject jsonObject = JObject.Parse(File.ReadAllText(ConfigPath));
             jsonObject["Token"] = token;
 

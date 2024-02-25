@@ -3,8 +3,6 @@ using GameShopAPP.Models;
 using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
 using GameShopAPP.Services.Requests;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -13,13 +11,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using GameShopAPP.Services.Validation;
-using System.Text;
+using System.Text.Json;
 using System.Windows.Navigation;
 using System.Windows.Input;
 using GameShopAPP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using GameShopAPP.Services.Navigation;
 using System.IO;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Net.Http;
+using System.Threading;
 
 namespace GameShopAPP.ViewModels
 {
@@ -28,7 +30,9 @@ namespace GameShopAPP.ViewModels
         public RelayCommand LogInCommand { get; }
         public NavigateCommand<RegistrationViewModel> NavigateRegistrationCommand { get; }
 
+
         private readonly IAuthenticationApiRequest _authenticationApiRequest;
+        private readonly IUserApiRequest _userApiRequest;
         private readonly ILoginModelValidation _loginModelValidation;
 
         private bool _isLoading;
@@ -77,13 +81,15 @@ namespace GameShopAPP.ViewModels
         }
 
 
-        public LoginViewModel(IAuthenticationApiRequest authenticationApiRequest, ILoginModelValidation loginModelValidation, NavigationStore navigationStore)
+        public LoginViewModel(IUserApiRequest userApiRequest, IAuthenticationApiRequest authenticationApiRequest, ILoginModelValidation loginModelValidation, NavigationStore navigationStore)
         {
             NavigateRegistrationCommand = new NavigateCommand<RegistrationViewModel>(navigationStore, () => new RegistrationViewModel(
+                DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
                 DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
                 DIContainer.ServiceProvider!.GetRequiredService<IRegistrationModelValidation>(),
                 navigationStore));
 
+            _userApiRequest = userApiRequest;
             _authenticationApiRequest = authenticationApiRequest;
             _loginModelValidation = loginModelValidation;
 
@@ -93,10 +99,10 @@ namespace GameShopAPP.ViewModels
             ResponseText = string.Empty;
 
             LogInCommand = new RelayCommand(LogIn);
-            
+
         }
 
-      
+
 
         public async void LogIn()
         {
@@ -108,9 +114,17 @@ namespace GameShopAPP.ViewModels
             IsLoading = false;
         }
 
-        private void SaveToken(string token)
+       
+
+        private async void OpenShopWindow(string login)
         {
-            ApiConfig.UpdateToken(token);
+            var responseMessage = await _userApiRequest.GetUserByLogin(login);
+              
+            User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
+
+            ShopWindow shopWindow = new ShopWindow(user);
+            Application.Current.MainWindow.Close();
+            shopWindow.Show();
         }
 
         private async Task CheckUser()
@@ -125,23 +139,22 @@ namespace GameShopAPP.ViewModels
                 }
 
                 var response = await _authenticationApiRequest.UserLogin(LoginModel);
-               
+
                 if (response.IsSuccessStatusCode)
                 {
                     ResponseText = "Successfuly";
-                    var responseData = await response.Content.ReadAsStringAsync();
-                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseData);
-                    string token = deserializedResponse!.Values.First();
 
-                    SaveToken(token);
-                    ShopWindow shopWindow = new ShopWindow();
-                    Application.Current.MainWindow.Close();
-                    shopWindow.Show();
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    var deserializedResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseData);
+                    string token = deserializedResponse!.Values.First();
+                    ApiConfig.UpdateToken(token);
+
+                    OpenShopWindow(LoginModel.login);
                 }
                 else
                 {
                     var responseData = await response.Content.ReadAsStringAsync();
-                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(responseData);
+                    var deserializedResponse = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(responseData);
                     List<string> errorList = deserializedResponse!.Values.First().ToList();
                     errorList.ForEach(x => ResponseText += x + "\r\n");
                 }

@@ -12,12 +12,12 @@ using System.Windows.Input;
 
 namespace GameShopAPP.ViewModels
 {
-    public class HomeViewModel : ViewModelBase
+    public class LibraryViewModel : ViewModelBase
     {
         public RelayCommand TestCommand { get; }
        
 
-        public HomeViewModel(NavigationStore navigationStore)
+        public LibraryViewModel(NavigationStore navigationStore)
         {
            
             TestCommand = new RelayCommand(Test2);

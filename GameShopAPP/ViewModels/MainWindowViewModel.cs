@@ -6,13 +6,14 @@ using GameShopAPP.Services.Requests;
 using GameShopAPP.Services.Validation;
 using GameShopAPP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,24 +43,17 @@ namespace GameShopAPP.ViewModels
             if (ApiConfig.Token == null)
                 return;
 
+            Application.Current.MainWindow.Visibility = Visibility.Hidden;
+
             var securityToken = new JwtSecurityTokenHandler().ReadToken(ApiConfig.Token) as JwtSecurityToken;
-
-            if (securityToken == null)
-                return;
-
             var loginClaim = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
-            if (loginClaim == null)
-                return;
+            var responseMessage = await _userApiRequest.GetUserByLogin(loginClaim.Value);
 
-            string loginNNN = loginClaim.Value;
-
-            Application.Current.MainWindow.Visibility = Visibility.Hidden;
-            var response = await _userApiRequest.GetUserRequest(0);
-
-            if (response.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode)
             {
-                ShopWindow shopWindow = new ShopWindow();
+                User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
+                ShopWindow shopWindow = new ShopWindow(user);
                 Application.Current.MainWindow.Close();
                 shopWindow.Show();
 

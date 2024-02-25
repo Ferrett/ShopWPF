@@ -17,10 +17,10 @@ namespace GameShopAPP.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
-        public NavigateCommand<HomeViewModel> NavigateHomeCommand { get; }
+        public NavigateCommand<LibraryViewModel> NavigateHomeCommand { get; }
         public SearchViewModel(NavigationStore navigationStore)
         {
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(
+            NavigateHomeCommand = new NavigateCommand<LibraryViewModel>(navigationStore, () => new LibraryViewModel(
                 navigationStore));
 
            

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:GameShopAPP"
         xmlns:viewmodels="clr-namespace:GameShopAPP.ViewModels"
         xmlns:views="clr-namespace:GameShopAPP.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="ShopWindow" Height="450" Width="800"  MinWidth="680">
 
@@ -24,7 +25,7 @@
 
             <Grid Grid.Column="0" MinWidth="400">
                 <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding NavigateSearchCommand}" Width="25" Height="25" HorizontalAlignment="Left" Margin="10,0,10,0">
+                    <Button Command="{Binding NavigateLibraryCommand}" Width="25" Height="25" HorizontalAlignment="Left" Margin="10,0,10,0">
                         <Border Background="White">
                             <Image Source="Resources/home.png" Stretch="Fill"/>
                         </Border>
@@ -32,8 +33,14 @@
                     <Grid>
                         <Rectangle Width="379" Height="25" HorizontalAlignment="Left" Fill="Black"></Rectangle>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox HorizontalAlignment="Left" Margin="3,0,3,0" Width="350" Height="20" Text="Search..."></TextBox>
-                            <Button Width="20" Height="20">
+                            <TextBox HorizontalAlignment="Left" Margin="3,0,3,0" Width="350" Height="20" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding SearchBarFocusCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Command="{Binding NavigateSearchCommand}" Width="20" Height="20">
                                 <Border Background="White">
                                     <Image Source="Resources/search.png" Stretch="Fill"/>
                                 </Border>
@@ -44,27 +51,38 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Margin="10" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="1">
-                <Label VerticalAlignment="Center" Foreground="Green" Content="0$" Margin="20,0,10,0"></Label>
+            <StackPanel Margin="10" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="1" >
+                <TextBlock VerticalAlignment="Center" Foreground="Green" Text="$" Margin="20,0,0,0" FontSize="15"></TextBlock>
+                <TextBlock VerticalAlignment="Center" Foreground="Green" Text="{Binding User.accountBalanceUSD, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" Margin="3,0,10,0"></TextBlock>
                 <Grid>
-                    <Ellipse Width="45" Height="45" Fill="Cyan"/>
-                    <Image Source="C:\Users\User\Desktop\goes hard af\9.9of10\1.jpg" Width="40" Height="40">
-                        <Image.Clip>
-                            <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20"/>
-                        </Image.Clip>
-                    </Image>
+                    <Ellipse Width="47" Height="47" Fill="Cyan"/>
+                    <Button Command="{Binding NavigateProfileCommand}" Background="Transparent">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                        <Image Cursor="Hand" Source="{Binding AvatarUrl, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="40" Height="40">
+                            <Image.Clip>
+                                <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20"/>
+                            </Image.Clip>
+                        </Image>
+                    </Button>
                 </Grid>
-                <TextBlock VerticalAlignment="Center" Foreground="DarkBlue" Text="vovka_prikhod" Margin="20,0,0,0" TextDecorations="Baseline"></TextBlock>
+                <TextBlock VerticalAlignment="Center" Foreground="DarkBlue" FontSize="20" Text="{Binding User.nickname, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Margin="20,0,0,0"></TextBlock>
             </StackPanel>
         </Grid>
 
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
-                    <views:HomeView/>
+                <DataTemplate DataType="{x:Type viewmodels:LibraryViewModel}">
+                    <views:LibraryView/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:SearchViewModel}">
                     <views:SearchView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ProfileViewModel}">
+                    <views:ProfileView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

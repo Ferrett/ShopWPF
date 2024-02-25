@@ -35,6 +35,7 @@ namespace GameShopAPP
             NavigationStore navigationStore = new NavigationStore();
 
             navigationStore.CurrentViewModel = new LoginViewModel(
+             DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
              DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
              DIContainer.ServiceProvider!.GetRequiredService<ILoginModelValidation>(),
              navigationStore);

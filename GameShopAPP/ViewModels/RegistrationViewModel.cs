@@ -7,7 +7,6 @@ using GameShopAPP.Services.Validation;
 using GameShopAPP.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,6 +28,7 @@ namespace GameShopAPP.ViewModels
 
         public NavigateCommand<LoginViewModel> NavigateLoginCommand { get; }
         private readonly IAuthenticationApiRequest _authenticationApiRequest;
+        private readonly IUserApiRequest _userApiRequest;
         private readonly IRegistrationModelValidation _registrationModelValidation;
 
         private RegistrationModel _registrationModel;
@@ -64,15 +64,16 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        public RegistrationViewModel(IAuthenticationApiRequest authenticationApiRequest, IRegistrationModelValidation registrationModelValidation, NavigationStore navigationStore)
+        public RegistrationViewModel(IUserApiRequest userApiRequest, IAuthenticationApiRequest authenticationApiRequest, IRegistrationModelValidation registrationModelValidation, NavigationStore navigationStore)
         {
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(navigationStore, () => new LoginViewModel(
-               
+                DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
                 DIContainer.ServiceProvider!.GetRequiredService<IAuthenticationApiRequest>(),
                 DIContainer.ServiceProvider!.GetRequiredService<ILoginModelValidation>(),
                 navigationStore));
 
             _authenticationApiRequest = authenticationApiRequest;
+            _userApiRequest = userApiRequest;
             _registrationModelValidation = registrationModelValidation;
             RegistrationModel = new RegistrationModel();
 
@@ -80,6 +81,16 @@ namespace GameShopAPP.ViewModels
             ResponseText = string.Empty;
 
             RegisterCommand = new RelayCommand(Register);
+        }
+
+        private async void OpenShopWindow(string login)
+        {
+            var responseMessage = await _userApiRequest.GetUserByLogin(login);
+            User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
+
+            ShopWindow shopWindow = new ShopWindow(user);
+            Application.Current.MainWindow.Close();
+            shopWindow.Show();
         }
 
         public async Task RegisterNewUser()
@@ -94,16 +105,24 @@ namespace GameShopAPP.ViewModels
                 }
 
                 RegistrationModel.password = BCrypt.Net.BCrypt.HashPassword(RegistrationModel.password);
+                RegistrationModel.email = RegistrationModel.email == string.Empty? null : RegistrationModel.email;
                 var response = await _authenticationApiRequest.RegisterNewUser(RegistrationModel);
 
                 if (response.IsSuccessStatusCode)
                 {
                     ResponseText = "Account created";
+
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    var deserializedResponse = JsonSerializer.Deserialize<Dictionary<string, string>>(responseData);
+                    string token = deserializedResponse!.Values.First();
+                    ApiConfig.UpdateToken(token);
+
+                    OpenShopWindow(RegistrationModel.login);
                 }
                 else
                 {
                     var responseData = await response.Content.ReadAsStringAsync();
-                    var deserializedResponse = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(responseData);
+                    var deserializedResponse = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(responseData);
                     List<string> errorList = deserializedResponse!.Values.First().ToList();
                     errorList.ForEach(x => ResponseText += x + "\r\n");
                 }

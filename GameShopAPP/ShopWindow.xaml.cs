@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Extensions.DependencyInjection;
+using GameShopAPP.Models;
 
 namespace GameShopAPP
 {
@@ -26,15 +27,15 @@ namespace GameShopAPP
     public partial class ShopWindow : Window
     {
         private ShopWindowViewModel shopWindowViewModel;
-        public ShopWindow()
+        public ShopWindow(User user)
         {
             InitializeComponent();
 
             NavigationStore navigationStore = new NavigationStore();
 
-            navigationStore.CurrentViewModel = new HomeViewModel(navigationStore);
+            navigationStore.CurrentViewModel = new LibraryViewModel(navigationStore);
 
-            shopWindowViewModel = new ShopWindowViewModel(navigationStore);
+            shopWindowViewModel = new ShopWindowViewModel(user, navigationStore);
             this.DataContext = shopWindowViewModel;
         }
     }

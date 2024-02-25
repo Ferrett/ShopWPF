@@ -15,8 +15,9 @@ namespace GameShopAPP.Models
         private string _login { get; set; } = null!;
         private string _password { get; set; } = null!;
         private string _nickname { get; set; } = null!;
-        private string? _avatarURL { get; set; } 
+        private string _profilePictureURL { get; set; } = null!;
         private string? _email { get; set; }
+        private float _accountBalanceUSD { get; set; }
         private DateTime _creationDate { get; set; }
 
         public int id
@@ -55,13 +56,13 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("nickname");
             }
         }
-        public string? avatarURL
+        public string profilePictureURL
         {
-            get { return _avatarURL; }
+            get { return _profilePictureURL; }
             set
             {
-                _avatarURL = value;
-                OnPropertyChanged("avatarURL");
+                _profilePictureURL = value;
+                OnPropertyChanged("profilePictureURL");
             }
         }
         public string? email
@@ -71,6 +72,15 @@ namespace GameShopAPP.Models
             {
                 _email = value;
                 OnPropertyChanged("email");
+            }
+        }
+        public float accountBalanceUSD
+        {
+            get { return _accountBalanceUSD; }
+            set
+            {
+                _accountBalanceUSD = value;
+                OnPropertyChanged("accountBalanceUSD");
             }
         }
         public DateTime creationDate

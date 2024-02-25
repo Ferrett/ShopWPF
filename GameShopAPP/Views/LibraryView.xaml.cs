@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace GameShopAPP.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for LibraryView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class LibraryView : UserControl
     {
-        public HomeView()
+        public LibraryView()
         {
             InitializeComponent();
         }
