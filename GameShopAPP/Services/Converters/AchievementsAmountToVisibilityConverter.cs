@@ -4,17 +4,17 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
 namespace GameShopAPP.Services.Converters
 {
-    [ValueConversion(typeof(object), typeof(bool))]
-    class IsEnabledToBoolConverter : IValueConverter
+    [ValueConversion(typeof(object), typeof(Visibility))]
+    class AchievementsAmountToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value == false ? true : false;
+            return (int)value > 0? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

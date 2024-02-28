@@ -104,7 +104,7 @@ namespace GameShopAPP.ViewModels
 
 
 
-        public async void LogIn()
+        public async void LogIn(object parameter)
         {
             IsLoading = true;
             ResponseText = string.Empty;

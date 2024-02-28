@@ -52,7 +52,7 @@ namespace GameShopAPP.Services.Requests
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetGamesByUserIDRequest/{userID}");
+                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetGamesByUserID/{userID}");
                 }
             }
             catch (Exception)
@@ -68,7 +68,7 @@ namespace GameShopAPP.Services.Requests
                 using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetUsersByGameIDRequest/{gameID}");
+                    return await client.GetAsync(client.BaseAddress + $"UserGame/GetUsersByGameID/{gameID}");
                 }
             }
             catch (Exception)

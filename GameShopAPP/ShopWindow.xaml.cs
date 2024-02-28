@@ -33,7 +33,11 @@ namespace GameShopAPP
 
             NavigationStore navigationStore = new NavigationStore();
 
-            navigationStore.CurrentViewModel = new LibraryViewModel(navigationStore);
+            navigationStore.CurrentViewModel = new LibraryViewModel(
+                DIContainer.ServiceProvider!.GetRequiredService<IGameStatsApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
+                user.id,
+                navigationStore);
 
             shopWindowViewModel = new ShopWindowViewModel(user, navigationStore);
             this.DataContext = shopWindowViewModel;

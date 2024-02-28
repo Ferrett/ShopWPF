@@ -54,6 +54,7 @@ namespace GameShopAPP.ViewModels
             {
                 User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
                 ShopWindow shopWindow = new ShopWindow(user);
+
                 Application.Current.MainWindow.Close();
                 shopWindow.Show();
 

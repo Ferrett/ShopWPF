@@ -133,7 +133,7 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        private async void Register()
+        private async void Register(object parameter)
         {
             IsLoading = true;
             ResponseText = string.Empty;

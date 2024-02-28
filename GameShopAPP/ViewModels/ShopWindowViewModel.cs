@@ -3,6 +3,7 @@ using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,12 +63,16 @@ namespace GameShopAPP.ViewModels
         public ShopWindowViewModel(User user, NavigationStore navigationStore)
         {
             NavigateSearchCommand = new NavigateCommand<SearchViewModel>(navigationStore, () => new SearchViewModel(
+                user.id,
               navigationStore));
 
             NavigateProfileCommand = new NavigateCommand<ProfileViewModel>(navigationStore, () => new ProfileViewModel(
               navigationStore));
 
             NavigateLibraryCommand = new NavigateCommand<LibraryViewModel>(navigationStore, () => new LibraryViewModel(
+                DIContainer.ServiceProvider!.GetRequiredService<IGameStatsApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
+                user.id,
               navigationStore));
 
             _navigationStore = navigationStore;
@@ -81,7 +86,7 @@ namespace GameShopAPP.ViewModels
         }
 
        
-        public void SearchBarGotFocus()
+        public void SearchBarGotFocus(object parameter)
         {
             SearchText = string.Empty;
         }

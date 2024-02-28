@@ -12,7 +12,7 @@
 
             <StackPanel>
                 <Separator Background="Black"></Separator>
-                <Label HorizontalAlignment="Center" Content="SHOP"></Label>
+                <Label HorizontalAlignment="Center" Content="SEARCH"></Label>
                 <StackPanel Background="DarkGray">
                     <Separator Background="Black"></Separator>
                     <Grid Margin="10">
