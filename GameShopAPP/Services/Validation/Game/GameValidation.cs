@@ -47,12 +47,12 @@ namespace GameShopAPP.Services.Validation
         private const float MaxPrice = 9999.0f;
         public (bool result, string errorMessage) ValidatePrice(Game game)
         {
-            if (game.priceUsd < MinPrice)
+            if (game.priceUSD < MinPrice)
             {
                 return (false, $"Price can't be negative");
             }
 
-            if (game.priceUsd > MaxPrice)
+            if (game.priceUSD > MaxPrice)
             {
                 return (false, $"Price is too high");
             }

@@ -4,8 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GameShopAPP.Views"
+             xmlns:localx="clr-namespace:GameShopAPP.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <localx:SearchViewModel x:Key="SearchViewModelInstance"/>
+        <cnv:DateTimeToDateConverter x:Key="DateTimeToDate"/>
+        <cnv:IsPurchasedToVisibilityConverter x:Key="IsPurchasedToVisibility"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid Background="LightGray">
 
@@ -13,40 +23,54 @@
             <StackPanel>
                 <Separator Background="Black"></Separator>
                 <Label HorizontalAlignment="Center" Content="SEARCH"></Label>
-                <StackPanel Background="DarkGray">
-                    <Separator Background="Black"></Separator>
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <ItemsControl ItemsSource="{Binding GameInfo}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Background="DarkGray">
+                                <Separator Background="Black"></Separator>
+                                <Grid Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button Height="70" Width="70"></Button>
-                            <TextBlock FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="GAMENAME"></TextBlock>
-                        </StackPanel>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <Image Height="70" Width="70" Source="{Binding Item1.logoURL}" Stretch="Uniform"/>
+                                        <TextBlock Foreground="Blue" TextDecorations="Underline" Cursor="Hand" FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding Item1.title}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.title}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </StackPanel>
 
-                        <Grid Grid.Column="1" HorizontalAlignment="Center">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
-                                    <Run Text="Developer:&#x0a;" />
-                                    <Run Text="Steam" FontSize="16" />
-                                </TextBlock>
-                                <TextBlock Margin="40,0,0,0" FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
-                                    <Run Text="Release date:&#x0a;" />
-                                    <Run Text="24.07.2003" FontSize="16" />
-                                </TextBlock>
+                                    <Grid Grid.Column="1" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
+                                                <Run Text="Developer:&#x0a;" />
+                                                <Run Text="{Binding Item2.name}" FontSize="16" />
+                                            </TextBlock>
+                                            <TextBlock Margin="40,0,0,0" FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
+                                                <Run Text="Release date:&#x0a;" />
+                                                <Run Text="{Binding Item1.publishDate, Converter={StaticResource DateTimeToDate}}" FontSize="16" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="2" FlowDirection="RightToLeft">
+                                        <TextBlock Visibility="{Binding Item3, Converter={StaticResource IsPurchasedToVisibility}}" FontSize="22" Foreground="Lime" VerticalAlignment="Center" Margin="40,0,0,0">
+                                            <Run Text="$" FontSize="20" />
+                                            <Run Text="{Binding Item1.priceUSD}" FontSize="20" />
+                                        </TextBlock>
+                                    </Grid>
+
+                                </Grid>
                             </StackPanel>
-                        </Grid>
-                        <Grid Grid.Column="2" FlowDirection="RightToLeft">
-                            <TextBlock Text="$999" FontSize="22" Foreground="Lime" VerticalAlignment="Center" Margin="40,0,0,0"></TextBlock>
-                        </Grid>
-
-                    </Grid>
-                </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </Grid>
-
     </Grid>
 </UserControl>

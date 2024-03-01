@@ -14,7 +14,7 @@ namespace GameShopAPP.Models
         private int _id { get; set; }
         private string _title { get; set; } = null!;
         private string? _logoURL { get; set; }
-        private float _priceUsd { get; set; }
+        private float _priceUSD { get; set; }
         private DateTime _publishDate { get; set; }
         private int _achievementsAmount { get; set; }
         private int _developerID { get; set; }
@@ -46,13 +46,13 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("logoURL");
             }
         }
-        public float priceUsd
+        public float priceUSD
         {
-            get { return _priceUsd; }
+            get { return _priceUSD; }
             set
             {
-                _priceUsd = value;
-                OnPropertyChanged("priceUsd");
+                _priceUSD = value;
+                OnPropertyChanged("_priceUSD");
             }
         }
         public DateTime publishDate

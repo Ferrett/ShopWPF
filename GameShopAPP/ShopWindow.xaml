@@ -7,9 +7,14 @@
         xmlns:viewmodels="clr-namespace:GameShopAPP.ViewModels"
         xmlns:views="clr-namespace:GameShopAPP.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
         mc:Ignorable="d"
         Title="ShopWindow" Height="450" Width="800" MinHeight="450"  MinWidth="680">
 
+    <Window.Resources>
+        <cnv:SearchTextToBoolConverter x:Key="SearchTextToBool"/>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -40,7 +45,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                            <Button Command="{Binding NavigateSearchCommand}" Width="20" Height="20">
+                            <Button IsEnabled="{Binding SearchText, Converter={StaticResource SearchTextToBool},UpdateSourceTrigger=PropertyChanged}" Command="{Binding NavigateSearchCommand}" Width="20" Height="20">
                                 <Border Background="White">
                                     <Image Source="Resources/search.png" Stretch="Fill"/>
                                 </Border>

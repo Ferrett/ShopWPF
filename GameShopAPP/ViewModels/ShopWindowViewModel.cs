@@ -63,17 +63,18 @@ namespace GameShopAPP.ViewModels
         public ShopWindowViewModel(User user, NavigationStore navigationStore)
         {
             NavigateSearchCommand = new NavigateCommand<SearchViewModel>(navigationStore, () => new SearchViewModel(
-                user.id,
-              navigationStore));
+                DIContainer.ServiceProvider!.GetRequiredService<IDeveloperApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IGameApiRequest>(),
+                SearchText, user.id, navigationStore));
 
             NavigateProfileCommand = new NavigateCommand<ProfileViewModel>(navigationStore, () => new ProfileViewModel(
-              navigationStore));
+                navigationStore));
 
             NavigateLibraryCommand = new NavigateCommand<LibraryViewModel>(navigationStore, () => new LibraryViewModel(
                 DIContainer.ServiceProvider!.GetRequiredService<IGameStatsApiRequest>(),
                 DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
-                user.id,
-              navigationStore));
+                user.id, navigationStore));
 
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
@@ -85,10 +86,10 @@ namespace GameShopAPP.ViewModels
             SearchBarFocusCommand = new RelayCommand(SearchBarGotFocus);
         }
 
-       
         public void SearchBarGotFocus(object parameter)
         {
-            SearchText = string.Empty;
+            if (SearchText == "Search...")
+                SearchText = string.Empty;
         }
 
         private void OnCurrentViewModelChanged()

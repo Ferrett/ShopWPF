@@ -27,34 +27,34 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-
         public RelayCommand PlayGameCommand { get; }
         public RelayCommand GetAchievementCommand { get; }
         public RelayCommand GameTitleClickCommand { get; }
+
         private readonly IUserGameApiRequest _userGameApiRequest;
         private readonly IGameStatsApiRequest _gameStatsApiRequest;
-        private int _userID;
+       
 
         public LibraryViewModel() { }
         public LibraryViewModel(IGameStatsApiRequest gameStatsApiRequest, IUserGameApiRequest userGameApiRequest, int userID, NavigationStore navigationStore) : base()
         {
-            GameInfo = new ObservableCollection<Tuple<Game, GameStats>>();
             _userGameApiRequest = userGameApiRequest;
             _gameStatsApiRequest = gameStatsApiRequest;
-            _userID = userID;
             
+            GameInfo = new ObservableCollection<Tuple<Game, GameStats>>();
+
             PlayGameCommand = new RelayCommand(PlayGame);
             GetAchievementCommand = new RelayCommand(GetAchievement);
             GameTitleClickCommand = new RelayCommand(GameTitleClick);
 
-            GetUserLibrary();
+            GetUserLibrary( userID);
         }
        
 
-        public async void GetUserLibrary()
+        public async void GetUserLibrary(int userID)
         {
-            var gameRequest = await _userGameApiRequest.GetGamesByUserIDRequest(_userID);
-            var gameStatsRequest = await _gameStatsApiRequest.GetGameStatsByUserID(_userID);
+            var gameRequest = await _userGameApiRequest.GetGamesByUserIDRequest(userID);
+            var gameStatsRequest = await _gameStatsApiRequest.GetGameStatsByUserID(userID);
 
             var games = JsonSerializer.Deserialize<ObservableCollection<Game>>(await gameRequest.Content.ReadAsStringAsync())!;
             var gameStats = JsonSerializer.Deserialize<ObservableCollection<GameStats>>(await gameStatsRequest.Content.ReadAsStringAsync())!;
@@ -80,7 +80,7 @@ namespace GameShopAPP.ViewModels
 
         public void GameTitleClick(object? parameter)
         {
-
+            
         }
     }
 }
