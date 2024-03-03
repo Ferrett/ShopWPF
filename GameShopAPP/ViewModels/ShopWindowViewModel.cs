@@ -28,7 +28,7 @@ namespace GameShopAPP.ViewModels
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
         public RelayCommand SearchBarFocusCommand { get; private set; }
-        private readonly IUserApiRequest _userApiRequest;
+
         private User _user;
         public User User
         {

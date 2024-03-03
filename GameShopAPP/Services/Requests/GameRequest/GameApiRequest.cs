@@ -62,7 +62,7 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetGamesByTitle(string gameTitle)
+        public async Task<HttpResponseMessage> GetGamesByTitleRequest(string gameTitle)
         {
             try
             {

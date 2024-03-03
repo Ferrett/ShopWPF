@@ -102,9 +102,7 @@ namespace GameShopAPP.ViewModels
 
         }
 
-
-
-        public async void LogIn(object parameter)
+        public async void LogIn(object? parameter)
         {
             IsLoading = true;
             ResponseText = string.Empty;
@@ -114,11 +112,9 @@ namespace GameShopAPP.ViewModels
             IsLoading = false;
         }
 
-       
-
         private async void OpenShopWindow(string login)
         {
-            var responseMessage = await _userApiRequest.GetUserByLogin(login);
+            var responseMessage = await _userApiRequest.GetUserByLoginRequest(login);
               
             User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
 
@@ -138,7 +134,7 @@ namespace GameShopAPP.ViewModels
                     return;
                 }
 
-                var response = await _authenticationApiRequest.UserLogin(LoginModel);
+                var response = await _authenticationApiRequest.UserLoginRequest(LoginModel);
 
                 if (response.IsSuccessStatusCode)
                 {

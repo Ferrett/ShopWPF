@@ -10,8 +10,7 @@ namespace GameShopAPP.Services.Requests
 {
     public interface IAuthenticationApiRequest
     {
-        public Task<HttpResponseMessage> RegisterNewUser(RegistrationModel registrationModel);
-        public Task<HttpResponseMessage> UserLogin(LoginModel loginModel);
-        public Task<HttpResponseMessage> VerifyToken();
+        public Task<HttpResponseMessage> RegisterNewUserRequest(RegistrationModel registrationModel);
+        public Task<HttpResponseMessage> UserLoginRequest(LoginModel loginModel);
     }
 }

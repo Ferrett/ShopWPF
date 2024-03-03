@@ -12,7 +12,7 @@ namespace GameShopAPP.Services.Requests
 {
     public class AuthenticationApiRequest : IAuthenticationApiRequest
     {
-        public async Task<HttpResponseMessage> RegisterNewUser(RegistrationModel registrationModel)
+        public async Task<HttpResponseMessage> RegisterNewUserRequest(RegistrationModel registrationModel)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> UserLogin(LoginModel loginModel)
+        public async Task<HttpResponseMessage> UserLoginRequest(LoginModel loginModel)
         {
             try
             {
@@ -38,22 +38,6 @@ namespace GameShopAPP.Services.Requests
                     string postData = JsonSerializer.Serialize(loginModel);
                     StringContent content = new StringContent(postData, Encoding.UTF8, "application/json");
                     return await client.PostAsync(client.BaseAddress + "Authentication/UserLogin", content);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task<HttpResponseMessage> VerifyToken()
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(30), BaseAddress = new Uri(ApiConfig.ApiURL) })
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiConfig.Token}");
-                    return await client.GetAsync(client.BaseAddress + $"Authentication/VerifyToken");
                 }
             }
             catch (Exception)

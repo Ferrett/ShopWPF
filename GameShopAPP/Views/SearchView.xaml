@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <localx:SearchViewModel x:Key="SearchViewModelInstance"/>
         <cnv:DateTimeToDateConverter x:Key="DateTimeToDate"/>
-        <cnv:IsPurchasedToVisibilityConverter x:Key="IsPurchasedToVisibility"/>
+        <cnv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
     </UserControl.Resources>
 
     <Grid>
@@ -23,7 +23,7 @@
             <StackPanel>
                 <Separator Background="Black"></Separator>
                 <Label HorizontalAlignment="Center" Content="SEARCH"></Label>
-                <ItemsControl ItemsSource="{Binding GameInfo}">
+                <ItemsControl ItemsSource="{Binding GamesInfo}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Background="DarkGray">
@@ -40,7 +40,8 @@
                                         <TextBlock Foreground="Blue" TextDecorations="Underline" Cursor="Hand" FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding Item1.title}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.title}"/>
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.id}"/>
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.NavigateGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBlock>
@@ -59,7 +60,7 @@
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Column="2" FlowDirection="RightToLeft">
-                                        <TextBlock Visibility="{Binding Item3, Converter={StaticResource IsPurchasedToVisibility}}" FontSize="22" Foreground="Lime" VerticalAlignment="Center" Margin="40,0,0,0">
+                                        <TextBlock Visibility="{Binding Item3, Converter={StaticResource BoolToVisibility},ConverterParameter=true}" FontSize="22" Foreground="Lime" VerticalAlignment="Center" Margin="40,0,0,0">
                                             <Run Text="$" FontSize="20" />
                                             <Run Text="{Binding Item1.priceUSD}" FontSize="20" />
                                         </TextBlock>

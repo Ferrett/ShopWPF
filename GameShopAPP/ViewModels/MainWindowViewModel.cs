@@ -46,9 +46,9 @@ namespace GameShopAPP.ViewModels
             Application.Current.MainWindow.Visibility = Visibility.Hidden;
 
             var securityToken = new JwtSecurityTokenHandler().ReadToken(ApiConfig.Token) as JwtSecurityToken;
-            var loginClaim = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var loginClaim = securityToken!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
-            var responseMessage = await _userApiRequest.GetUserByLogin(loginClaim.Value);
+            var responseMessage = await _userApiRequest.GetUserByLoginRequest(loginClaim!.Value);
 
             if (responseMessage.IsSuccessStatusCode)
             {

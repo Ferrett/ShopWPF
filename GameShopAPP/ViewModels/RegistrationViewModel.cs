@@ -85,7 +85,7 @@ namespace GameShopAPP.ViewModels
 
         private async void OpenShopWindow(string login)
         {
-            var responseMessage = await _userApiRequest.GetUserByLogin(login);
+            var responseMessage = await _userApiRequest.GetUserByLoginRequest(login);
             User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
 
             ShopWindow shopWindow = new ShopWindow(user);
@@ -106,7 +106,7 @@ namespace GameShopAPP.ViewModels
 
                 RegistrationModel.password = BCrypt.Net.BCrypt.HashPassword(RegistrationModel.password);
                 RegistrationModel.email = RegistrationModel.email == string.Empty? null : RegistrationModel.email;
-                var response = await _authenticationApiRequest.RegisterNewUser(RegistrationModel);
+                var response = await _authenticationApiRequest.RegisterNewUserRequest(RegistrationModel);
 
                 if (response.IsSuccessStatusCode)
                 {

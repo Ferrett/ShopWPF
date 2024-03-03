@@ -33,11 +33,23 @@ namespace GameShopAPP.ViewModels
 
         private readonly IUserGameApiRequest _userGameApiRequest;
         private readonly IGameStatsApiRequest _gameStatsApiRequest;
-       
+
+        public NavigateCommand<GameViewModel> NavigateGameCommand { get; }
+
+        private int SelectedGameID { get; set; }
 
         public LibraryViewModel() { }
         public LibraryViewModel(IGameStatsApiRequest gameStatsApiRequest, IUserGameApiRequest userGameApiRequest, int userID, NavigationStore navigationStore) : base()
         {
+            NavigateGameCommand = new NavigateCommand<GameViewModel>(navigationStore, () => new GameViewModel(
+               DIContainer.ServiceProvider!.GetRequiredService<IDeveloperApiRequest>(),
+               DIContainer.ServiceProvider!.GetRequiredService<IReviewApiRequest>(),
+               DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
+               DIContainer.ServiceProvider!.GetRequiredService<IGameApiRequest>(),
+               DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
+               SelectedGameID,
+               userID));
+
             _userGameApiRequest = userGameApiRequest;
             _gameStatsApiRequest = gameStatsApiRequest;
             
@@ -54,7 +66,7 @@ namespace GameShopAPP.ViewModels
         public async void GetUserLibrary(int userID)
         {
             var gameRequest = await _userGameApiRequest.GetGamesByUserIDRequest(userID);
-            var gameStatsRequest = await _gameStatsApiRequest.GetGameStatsByUserID(userID);
+            var gameStatsRequest = await _gameStatsApiRequest.GetGameStatsByUserIDRequest(userID);
 
             var games = JsonSerializer.Deserialize<ObservableCollection<Game>>(await gameRequest.Content.ReadAsStringAsync())!;
             var gameStats = JsonSerializer.Deserialize<ObservableCollection<GameStats>>(await gameStatsRequest.Content.ReadAsStringAsync())!;
@@ -66,21 +78,21 @@ namespace GameShopAPP.ViewModels
 
         public async void PlayGame(object? parameter)
         {
-            var gameStats = GameInfo.FirstOrDefault(tuple => tuple.Item2.id == (int)parameter)!.Item2;
+            var gameStats = GameInfo.FirstOrDefault(tuple => tuple.Item2.id == (int)parameter!)!.Item2;
             gameStats!.hoursPlayed += 1;
             await _gameStatsApiRequest.PutGameStatsRequest((int)parameter!, gameStats); 
         }
 
         public async void GetAchievement(object? parameter)
         {
-            var gameStats = GameInfo.FirstOrDefault(tuple => tuple.Item2.id == (int)parameter)!.Item2;
+            var gameStats = GameInfo.FirstOrDefault(tuple => tuple.Item2.id == (int)parameter!)!.Item2;
             gameStats!.achievementsGotten += 1;
             await _gameStatsApiRequest.PutGameStatsRequest((int)parameter!, gameStats);
         }
 
         public void GameTitleClick(object? parameter)
         {
-            
+            SelectedGameID = (int)parameter!;
         }
     }
 }

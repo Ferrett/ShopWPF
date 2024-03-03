@@ -60,7 +60,7 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetUserByLogin(string userLogin)
+        public async Task<HttpResponseMessage> GetUserByLoginRequest(string userLogin)
         {
             try
             {

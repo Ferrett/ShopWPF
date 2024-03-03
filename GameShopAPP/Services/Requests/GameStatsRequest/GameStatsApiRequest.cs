@@ -64,7 +64,7 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetGameStatsByUserID(int userID)
+        public async Task<HttpResponseMessage> GetGameStatsByUserIDRequest(int userID)
         {
             try
             {

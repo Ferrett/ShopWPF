@@ -9,7 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
         mc:Ignorable="d"
-        Title="ShopWindow" Height="450" Width="800" MinHeight="450"  MinWidth="680">
+        Title="ShopWindow" Height="900" Width="1500" MinHeight="450"  MinWidth="680">
 
     <Window.Resources>
         <cnv:SearchTextToBoolConverter x:Key="SearchTextToBool"/>

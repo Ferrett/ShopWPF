@@ -10,11 +10,14 @@ using System.Windows.Data;
 namespace GameShopAPP.Services.Converters
 {
     [ValueConversion(typeof(object), typeof(Visibility))]
-    class IsPurchasedToVisibilityConverter : IValueConverter
+    class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value == true ? Visibility.Hidden : Visibility.Collapsed;
+            if (parameter == null || bool.Parse(parameter.ToString()!) == true)
+                return (bool)value == true ? Visibility.Visible : Visibility.Collapsed;
+
+            return (bool)value == false ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

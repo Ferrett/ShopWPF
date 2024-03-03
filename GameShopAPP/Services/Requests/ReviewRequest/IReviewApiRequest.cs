@@ -14,7 +14,7 @@ namespace GameShopAPP.Services.Requests
         Task<HttpResponseMessage> PostReviewRequest(Review review);
         Task<HttpResponseMessage> GetAllReviewsRequest();
         Task<HttpResponseMessage> GetReviewRequest(int reviewID);
-        Task<HttpResponseMessage> GetReviewsByGameID(int gameID);
+        Task<HttpResponseMessage> GetReviewsByGameIDRequest(int gameID);
         Task<HttpResponseMessage> PutReviewRequest(int reviewID, Review review);
         Task<HttpResponseMessage> DeleteReviewRequest(int reviewID);
     }

@@ -58,7 +58,7 @@ namespace GameShopAPP.Services.Requests
             }
         }
 
-        public async Task<HttpResponseMessage> GetReviewsByGameID(int gameID)
+        public async Task<HttpResponseMessage> GetReviewsByGameIDRequest(int gameID)
         {
             try
             {
