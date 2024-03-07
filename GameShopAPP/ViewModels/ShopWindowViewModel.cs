@@ -3,6 +3,7 @@ using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
+using GameShopAPP.Services.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,9 @@ namespace GameShopAPP.ViewModels
                 SearchText, user.id, navigationStore));
 
             NavigateProfileCommand = new NavigateCommand<ProfileViewModel>(navigationStore, () => new ProfileViewModel(
-                navigationStore));
+                DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
+                DIContainer.ServiceProvider!.GetRequiredService<IRegistrationModelValidation>(),
+                user.id));
 
             NavigateLibraryCommand = new NavigateCommand<LibraryViewModel>(navigationStore, () => new LibraryViewModel(
                 DIContainer.ServiceProvider!.GetRequiredService<IGameStatsApiRequest>(),

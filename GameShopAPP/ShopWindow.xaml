@@ -67,7 +67,7 @@
                                 <Setter Property="CornerRadius" Value="25"/>
                             </Style>
                         </Button.Resources>
-                        <Image Cursor="Hand" Source="{Binding AvatarUrl, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="40" Height="40">
+                        <Image Cursor="Hand" Stretch="Fill" Source="{Binding AvatarUrl, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="40" Height="40">
                             <Image.Clip>
                                 <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20"/>
                             </Image.Clip>

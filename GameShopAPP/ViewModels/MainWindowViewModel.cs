@@ -50,7 +50,7 @@ namespace GameShopAPP.ViewModels
 
             var responseMessage = await _userApiRequest.GetUserByLoginRequest(loginClaim!.Value);
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode && responseMessage.StatusCode!=System.Net.HttpStatusCode.NoContent)
             {
                 User user = JsonSerializer.Deserialize<User>(await responseMessage.Content.ReadAsStringAsync())!;
                 ShopWindow shopWindow = new ShopWindow(user);

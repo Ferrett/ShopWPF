@@ -65,8 +65,8 @@ namespace GameShopAPP.ViewModels
         private readonly IUserApiRequest _userApiRequest;
 
         public RelayCommand BuyGameCommand { get; }
-        private int GameID;
-        private int UserID;
+        private int _gameID;
+        private int _userID;
 
         private bool _isGameBought;
         public bool IsGameBought
@@ -87,8 +87,8 @@ namespace GameShopAPP.ViewModels
             _gameApiRequest = gameApiRequest;
             _userApiRequest = userApiRequest;
 
-            GameID = gameID;
-            UserID = userID;
+            _gameID = gameID;
+            _userID = userID;
             ReviewsInfo = new ObservableCollection<Tuple<Review, User>>();
             IsGameBought = false;
 
@@ -99,7 +99,6 @@ namespace GameShopAPP.ViewModels
         private async void Test()
         {
             await GetGame();
-
             await Task.WhenAll(GetDeveloper(), GetReviews(), GetGameBought());
 
             GetAverageRating();
@@ -107,15 +106,15 @@ namespace GameShopAPP.ViewModels
 
         private async Task GetGameBought()
         {
-            var a = await _userGameApiRequest.GetGamesByUserIDRequest(UserID);
+            var a = await _userGameApiRequest.GetGamesByUserIDRequest(_userID);
             var b = JsonSerializer.Deserialize<ObservableCollection<Game>>(await a.Content.ReadAsStringAsync())!;
 
-            if(b.Any(x=>x.id==GameID))
+            if(b.Any(x=>x.id==_gameID))
                 IsGameBought = true;
         }
         private async Task GetGame()
         {
-            var gameRequest = await _gameApiRequest.GetGameRequest(GameID);
+            var gameRequest = await _gameApiRequest.GetGameRequest(_gameID);
 
             Game = JsonSerializer.Deserialize<Game>(await gameRequest.Content.ReadAsStringAsync())!;
         }
@@ -162,7 +161,7 @@ namespace GameShopAPP.ViewModels
         public async void BuyGame(object? parameter)
         {
             IsGameBought = false;
-            await _userGameApiRequest.PostUserGameRequest(new UserGame() { gameID = GameID, userID = UserID });
+            await _userGameApiRequest.PostUserGameRequest(new UserGame() { gameID = _gameID, userID = _userID });
         }
     }
 }
