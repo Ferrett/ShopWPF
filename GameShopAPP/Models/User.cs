@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameShopAPP.Models
 {
@@ -29,6 +24,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("id");
             }
         }
+
         public string login
         {
             get { return _login; }
@@ -38,6 +34,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("login");
             }
         }
+
         public string password
         {
             get { return _password; }
@@ -47,6 +44,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("password");
             }
         }
+
         public string nickname
         {
             get { return _nickname; }
@@ -56,6 +54,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("nickname");
             }
         }
+
         public string profilePictureURL
         {
             get { return _profilePictureURL; }
@@ -65,6 +64,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("profilePictureURL");
             }
         }
+
         public string? email
         {
             get { return _email; }
@@ -74,6 +74,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("email");
             }
         }
+
         public float accountBalanceUSD
         {
             get { return _accountBalanceUSD; }

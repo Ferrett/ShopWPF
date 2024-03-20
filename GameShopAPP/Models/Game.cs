@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameShopAPP.Models
 {
@@ -28,6 +23,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("id");
             }
         }
+
         public string title
         {
             get { return _title; }
@@ -37,6 +33,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("title");
             }
         }
+
         public string? logoURL
         {
             get { return _logoURL; }
@@ -46,6 +43,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("logoURL");
             }
         }
+
         public float priceUSD
         {
             get { return _priceUSD; }
@@ -55,6 +53,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("_priceUSD");
             }
         }
+
         public DateTime publishDate
         {
             get { return _publishDate; }
@@ -64,6 +63,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("publishDate");
             }
         }
+
         public int achievementsAmount
         {
             get { return _achievementsAmount; }
@@ -73,6 +73,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("achievementsAmount");
             }
         }
+
         public int developerID
         {
             get { return _developerID; }
@@ -82,6 +83,7 @@ namespace GameShopAPP.Models
                 OnPropertyChanged("developerID");
             }
         }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {

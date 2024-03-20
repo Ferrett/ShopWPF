@@ -1,23 +1,25 @@
 ﻿using GameShopAPP.Models;
 using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
-using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
 using GameShopAPP.Services.Validation;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace GameShopAPP.ViewModels
 {
     public class ProfileViewModel : ViewModelBase
     {
+        public RelayCommand SaveChangesCommand { get; }
+        public RelayCommand ChangePFPCommand { get; }
+
+        private readonly IUserApiRequest _userApiRequest;
+        private readonly IRegistrationModelValidation _registrationModelValidation;
+
+        private int _userID;
+
         private User _user;
         public User User
         {
@@ -73,17 +75,11 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        public RelayCommand SaveChangesCommand { get; }
-        public RelayCommand ChangePFPCommand { get; }
-        private readonly IUserApiRequest _userApiRequest;
-        private readonly IRegistrationModelValidation _registrationModelValidation;
-        private int _userID;
         public ProfileViewModel(IUserApiRequest userApiRequest, IRegistrationModelValidation registrationModelValidation, int userID)
         {
             _userApiRequest = userApiRequest;
             _registrationModelValidation = registrationModelValidation;
             _userID = userID;
-
 
             IsChangesSuccessful = false;
             ResponseText = string.Empty;

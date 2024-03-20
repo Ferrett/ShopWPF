@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameShopAPP.Models.ServiceModels
 {
@@ -22,6 +18,7 @@ namespace GameShopAPP.Models.ServiceModels
                 OnPropertyChanged("login");
             }
         }
+
         public string password
         {
             get { return _password; }
@@ -31,7 +28,6 @@ namespace GameShopAPP.Models.ServiceModels
                 OnPropertyChanged("password");
             }
         }
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)

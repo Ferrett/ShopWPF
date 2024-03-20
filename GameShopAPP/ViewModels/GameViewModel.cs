@@ -1,12 +1,9 @@
 ﻿using GameShopAPP.Models;
-using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
 using GameShopAPP.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
@@ -14,6 +11,17 @@ namespace GameShopAPP.ViewModels
 {
     public class GameViewModel : ViewModelBase
     {
+        public RelayCommand BuyGameCommand { get; }
+
+        private readonly IDeveloperApiRequest _developerApiRequest;
+        private readonly IReviewApiRequest _reviewApiRequest;
+        private readonly IUserGameApiRequest _userGameApiRequest;
+        private readonly IGameApiRequest _gameApiRequest;
+        private readonly IUserApiRequest _userApiRequest;
+
+        private int _gameID;
+        private int _userID;
+
         private Game _game;
         public Game Game
         {
@@ -58,16 +66,6 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        private readonly IDeveloperApiRequest _developerApiRequest;
-        private readonly IReviewApiRequest _reviewApiRequest;
-        private readonly IUserGameApiRequest _userGameApiRequest;
-        private readonly IGameApiRequest _gameApiRequest;
-        private readonly IUserApiRequest _userApiRequest;
-
-        public RelayCommand BuyGameCommand { get; }
-        private int _gameID;
-        private int _userID;
-
         private bool _isGameBought;
         public bool IsGameBought
         {
@@ -78,6 +76,7 @@ namespace GameShopAPP.ViewModels
                 OnPropertyChanged("IsGameBought");
             }
         }
+
         public GameViewModel() { }
         public GameViewModel(IDeveloperApiRequest developerApiRequest, IReviewApiRequest reviewApiRequest, IUserGameApiRequest userGameApiRequest, IGameApiRequest gameApiRequest, IUserApiRequest userApiRequest, int gameID, int userID)
         {
@@ -106,10 +105,10 @@ namespace GameShopAPP.ViewModels
 
         private async Task GetGameBought()
         {
-            var a = await _userGameApiRequest.GetGamesByUserIDRequest(_userID);
-            var b = JsonSerializer.Deserialize<ObservableCollection<Game>>(await a.Content.ReadAsStringAsync())!;
+            var gameRequest = await _userGameApiRequest.GetGamesByUserIDRequest(_userID);
+            var games = JsonSerializer.Deserialize<ObservableCollection<Game>>(await gameRequest.Content.ReadAsStringAsync())!;
 
-            if(b.Any(x=>x.id==_gameID))
+            if(games.Any(x=>x.id==_gameID))
                 IsGameBought = true;
         }
         private async Task GetGame()

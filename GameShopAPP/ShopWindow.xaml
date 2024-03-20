@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameShopAPP"
         xmlns:viewmodels="clr-namespace:GameShopAPP.ViewModels"
         xmlns:views="clr-namespace:GameShopAPP.Views"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -14,14 +13,13 @@
     <Window.Resources>
         <cnv:SearchTextToBoolConverter x:Key="SearchTextToBool"/>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Button -->
         <Grid Grid.Row="0" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>

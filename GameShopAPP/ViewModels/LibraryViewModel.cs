@@ -2,20 +2,26 @@
 using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
-using GameShopAPP.Services.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace GameShopAPP.ViewModels
 {
     public class LibraryViewModel : ViewModelBase
     {
+        public NavigateCommand<GameViewModel> NavigateGameCommand { get; }
+        public RelayCommand PlayGameCommand { get; }
+        public RelayCommand GetAchievementCommand { get; }
+        public RelayCommand GameTitleClickCommand { get; }
+
+        private readonly IUserGameApiRequest _userGameApiRequest;
+        private readonly IGameStatsApiRequest _gameStatsApiRequest;
+
+        private int _selectedGameID { get; set; }
+
         private ObservableCollection <Tuple<Game, GameStats>> _gameInfo;
         public ObservableCollection<Tuple<Game, GameStats>> GameInfo
         {
@@ -27,17 +33,6 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        public RelayCommand PlayGameCommand { get; }
-        public RelayCommand GetAchievementCommand { get; }
-        public RelayCommand GameTitleClickCommand { get; }
-
-        private readonly IUserGameApiRequest _userGameApiRequest;
-        private readonly IGameStatsApiRequest _gameStatsApiRequest;
-
-        public NavigateCommand<GameViewModel> NavigateGameCommand { get; }
-
-        private int SelectedGameID { get; set; }
-
         public LibraryViewModel() { }
         public LibraryViewModel(IGameStatsApiRequest gameStatsApiRequest, IUserGameApiRequest userGameApiRequest, int userID, NavigationStore navigationStore) : base()
         {
@@ -47,7 +42,7 @@ namespace GameShopAPP.ViewModels
                DIContainer.ServiceProvider!.GetRequiredService<IUserGameApiRequest>(),
                DIContainer.ServiceProvider!.GetRequiredService<IGameApiRequest>(),
                DIContainer.ServiceProvider!.GetRequiredService<IUserApiRequest>(),
-               SelectedGameID,
+               _selectedGameID,
                userID));
 
             _userGameApiRequest = userGameApiRequest;
@@ -62,7 +57,6 @@ namespace GameShopAPP.ViewModels
             GetUserLibrary( userID);
         }
        
-
         public async void GetUserLibrary(int userID)
         {
             var gameRequest = await _userGameApiRequest.GetGamesByUserIDRequest(userID);
@@ -92,7 +86,7 @@ namespace GameShopAPP.ViewModels
 
         public void GameTitleClick(object? parameter)
         {
-            SelectedGameID = (int)parameter!;
+            _selectedGameID = (int)parameter!;
         }
     }
 }

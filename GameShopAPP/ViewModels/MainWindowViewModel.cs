@@ -1,33 +1,22 @@
 ﻿using GameShopAPP.Models;
-using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
-using GameShopAPP.Services.Validation;
-using GameShopAPP.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace GameShopAPP.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-        private readonly IUserApiRequest _userApiRequest;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+
+        private readonly IUserApiRequest _userApiRequest;
+
         public MainWindowViewModel(IUserApiRequest userApiRequest, NavigationStore navigationStore)
         {
             _userApiRequest = userApiRequest;
@@ -57,7 +46,6 @@ namespace GameShopAPP.ViewModels
 
                 Application.Current.MainWindow.Close();
                 shopWindow.Show();
-
             }
             else
                 Application.Current.MainWindow.Visibility = Visibility.Visible;

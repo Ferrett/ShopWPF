@@ -1,14 +1,11 @@
 ﻿using GameShopAPP.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using GameShopAPP.Models.ServiceModels;
 
 namespace GameShopAPP.Services.Requests
 {

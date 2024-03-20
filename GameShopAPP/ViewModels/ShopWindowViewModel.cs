@@ -1,34 +1,26 @@
 ﻿using GameShopAPP.Models;
-using GameShopAPP.Models.ServiceModels;
 using GameShopAPP.Services;
 using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
 using GameShopAPP.Services.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GameShopAPP.ViewModels
 {
     public class ShopWindowViewModel : ViewModelBase
     {
-
+        private readonly NavigationStore _navigationStore;
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public NavigateCommand<SearchViewModel> NavigateSearchCommand { get; }
         public NavigateCommand<ProfileViewModel> NavigateProfileCommand { get; }
         public NavigateCommand<LibraryViewModel> NavigateLibraryCommand { get; }
 
-        private readonly NavigationStore _navigationStore;
-        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-
         public RelayCommand SearchBarFocusCommand { get; private set; }
+
+        private readonly string _defaultSearchText;
 
         private User _user;
         public User User
@@ -51,6 +43,7 @@ namespace GameShopAPP.ViewModels
                 OnPropertyChanged("SearchText");
             }
         }
+
         private ImageSource _avatarUrl;
         public ImageSource AvatarUrl
         {
@@ -61,6 +54,7 @@ namespace GameShopAPP.ViewModels
                 OnPropertyChanged("AvatarUrl");
             }
         }
+
         public ShopWindowViewModel(User user, NavigationStore navigationStore)
         {
             NavigateSearchCommand = new NavigateCommand<SearchViewModel>(navigationStore, () => new SearchViewModel(
@@ -83,15 +77,16 @@ namespace GameShopAPP.ViewModels
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             User = user;
-            SearchText = "Search...";
+            _defaultSearchText = "Search...";
+            SearchText = _defaultSearchText;
             AvatarUrl = new BitmapImage(new Uri(User.profilePictureURL));
 
             SearchBarFocusCommand = new RelayCommand(SearchBarGotFocus);
         }
 
-        public void SearchBarGotFocus(object parameter)
+        public void SearchBarGotFocus(object? parameter)
         {
-            if (SearchText == "Search...")
+            if (SearchText == _defaultSearchText)
                 SearchText = string.Empty;
         }
 

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GameShopAPP.Views"
              xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="355" d:DesignWidth="400">
@@ -11,24 +10,21 @@
     <UserControl.Resources>
         <cnv:IsEnabledToBoolConverter x:Key="IsEnabledToBool"/>
     </UserControl.Resources>
-    
+
     <Grid>
-
         <Grid Background="LightGray">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <Frame x:Name="mainFrame"/>
 
-            <StackPanel Grid.Row="0" Margin="0,10,0,0">
-                <Label Content="Login" HorizontalAlignment="Center" ></Label>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
+                <Label FontFamily="Gill Sans MT" FontSize="20" Content="Login" HorizontalAlignment="Center" ></Label>
                 <TextBox Text="{Binding LoginModel.login, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,10,0,0"></TextBox>
             </StackPanel>
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" VerticalAlignment="Center">
                 <Label Content="Password" HorizontalAlignment="Center" ></Label>
                 <TextBox Text="{Binding LoginModel.password, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Background="White" HorizontalAlignment="Center" Width="200" Height="25" Margin="0,10,0,0"></TextBox>
                 <Label Content="{Binding ResponseText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></Label>
@@ -40,8 +36,8 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Button IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Width="150" Height="30" Content="Create new account" Command="{Binding NavigateRegistrationCommand}"></Button>
-                <Button IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Command="{Binding LogInCommand}" Grid.Column="1"  Width="150" Height="30" Content="Log in"></Button>
+                <Button Style="{StaticResource RoundedButtonStyle}" IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Width="150" Height="30" Content="Create new account" Command="{Binding NavigateRegistrationCommand}"></Button>
+                <Button Style="{StaticResource RoundedButtonStyle}" IsEnabled="{Binding IsLoading, Converter={StaticResource IsEnabledToBool},UpdateSourceTrigger=PropertyChanged}" Command="{Binding LogInCommand}" Grid.Column="1"  Width="150" Height="30" Content="Log in"></Button>
             </Grid>
         </Grid>
     </Grid>

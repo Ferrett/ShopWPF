@@ -1,8 +1,6 @@
 ﻿using GameShopAPP.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text;
@@ -30,6 +28,7 @@ namespace GameShopAPP.Services.Requests
                 throw;
             }
         }
+
         public async Task<HttpResponseMessage> GetAllGamesRequest()
         {
             try
@@ -77,7 +76,6 @@ namespace GameShopAPP.Services.Requests
                 throw;
             }
         }
-
 
         public async Task<HttpResponseMessage> PutGameRequest(int gameID, Game game)
         {
@@ -139,6 +137,7 @@ namespace GameShopAPP.Services.Requests
                 throw;
             }
         }
+
         private byte[] ConvertBitmapImageToByteArray(BitmapImage bitmapImage)
         {
             BitmapSource bitmapSource = bitmapImage;

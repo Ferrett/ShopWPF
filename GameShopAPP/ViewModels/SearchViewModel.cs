@@ -1,17 +1,9 @@
-﻿using GameShopAPP.Models.ServiceModels;
-using GameShopAPP.Services.Navigation;
+﻿using GameShopAPP.Services.Navigation;
 using GameShopAPP.Services.Requests;
-using GameShopAPP.Services.Validation;
 using GameShopAPP.Services;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.DependencyInjection;
-using System.Windows.Input;
 using GameShopAPP.Models;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -20,6 +12,13 @@ namespace GameShopAPP.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
+        public NavigateCommand<GameViewModel> NavigateGameCommand { get; }
+        public RelayCommand GameTitleClickCommand { get; }
+
+        private readonly IUserGameApiRequest _userGameApiRequest;
+        private readonly IDeveloperApiRequest _developerApiRequest;
+        private readonly IGameApiRequest _gameApiRequest;
+
         private ObservableCollection<Tuple<Game, Developer, bool>> _gameInfo;
         public ObservableCollection<Tuple<Game, Developer, bool>> GamesInfo
         {
@@ -30,13 +29,6 @@ namespace GameShopAPP.ViewModels
                 OnPropertyChanged("GameInfo");
             }
         }
-
-        private readonly IUserGameApiRequest _userGameApiRequest;
-        private readonly IDeveloperApiRequest _developerApiRequest;
-        private readonly IGameApiRequest _gameApiRequest;
-
-        public NavigateCommand<GameViewModel> NavigateGameCommand { get; }
-        public RelayCommand GameTitleClickCommand { get; }
 
         private int _selectedGameID;
         public int SelectedGameID
@@ -84,8 +76,8 @@ namespace GameShopAPP.ViewModels
                 bool hasEntry = userGames.Any(userGame => userGame.userID == userID && userGame.gameID == game.id);
 
                 var developerRequest = await _developerApiRequest.GetDeveloperRequest(game.developerID);
-                var dev = JsonSerializer.Deserialize<Developer>(await developerRequest.Content.ReadAsStringAsync())!;
-                GamesInfo.Add(new Tuple<Game, Developer, bool>(game, dev, hasEntry)); ;
+                var developer = JsonSerializer.Deserialize<Developer>(await developerRequest.Content.ReadAsStringAsync())!;
+                GamesInfo.Add(new Tuple<Game, Developer, bool>(game, developer, hasEntry)); ;
             }
         }
 

@@ -1,20 +1,14 @@
 ﻿using GameShopAPP.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 
 namespace GameShopAPP.Services.Requests
 {
     public class GameStatsApiRequest : IGameStatsApiRequest
     {
-
         public async Task<HttpResponseMessage> PostGameStatsRequest(GameStats gameStats)
         {
             try
@@ -32,6 +26,7 @@ namespace GameShopAPP.Services.Requests
                 throw;
             }
         }
+
         public async Task<HttpResponseMessage> GetAllGamesStatsRequest()
         {
             try
