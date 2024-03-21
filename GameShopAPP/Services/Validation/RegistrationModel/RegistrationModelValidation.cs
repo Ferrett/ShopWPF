@@ -11,9 +11,12 @@ namespace GameShopAPP.Services.Validation
             if (loginValidationResult.result == false)
                 return (false, loginValidationResult.errorMessage);
 
-            var passwordValidationResult = ValidatePassword(registrationModel);
-            if (passwordValidationResult.result == false)
-                return (false, passwordValidationResult.errorMessage);
+            if (registrationModel.password != null)
+            {
+                var passwordValidationResult = ValidatePassword(registrationModel);
+                if (passwordValidationResult.result == false)
+                    return (false, passwordValidationResult.errorMessage);
+            }
 
             var nicknameValidationResult = ValidateNickname(registrationModel);
             if (nicknameValidationResult.result == false)

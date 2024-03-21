@@ -34,7 +34,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Grid Width="200" Height="200" Grid.Column="0" Grid.Row="0">
+                        <Grid Grid.Column="0" Grid.Row="0" Width="200" Height="200">
                             <Border Background="White" BorderBrush="Black" BorderThickness="1" >
                                 <Image Source="{Binding Game.logoURL}"></Image>
                             </Border>
@@ -43,21 +43,21 @@
                         <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel >
                                 <TextBlock FontSize="13" TextAlignment="Center">
-                            <Run Text="Developer:&#x0a;" />
-                            <Run Text="{Binding Developer.name}" FontSize="20" />
+                                    <Run Text="Developer:&#x0a;" />
+                                    <Run Text="{Binding Developer.name}" FontSize="20" />
                                 </TextBlock>
-                                <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
-                            <Run Text="Review rating:&#x0a;" />
-                            <Run Text="{Binding AverageRating}" FontSize="20" />
-                            <Run Text="%" FontSize="20" />
+                                <TextBlock FontSize="13" TextAlignment="Center" Margin="0,30,0,0" >
+                                    <Run Text="Review rating:&#x0a;" />
+                                    <Run Text="{Binding AverageRating}" FontSize="20" />
+                                    <Run Text="%" FontSize="20" />
                                 </TextBlock>
-                                <TextBlock FontSize="13" Margin="0,30,0,0" TextAlignment="Center">
-                            <Run Text="Release date:&#x0a;" />
-                            <Run Text="{Binding Game.publishDate, Converter={StaticResource DateTimeToDate}}" FontSize="20" />
+                                <TextBlock FontSize="13" TextAlignment="Center" Margin="0,30,0,0" >
+                                    <Run Text="Release date:&#x0a;" />
+                                    <Run Text="{Binding Game.publishDate, Converter={StaticResource DateTimeToDate}}" FontSize="20" />
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
-                        <Separator Grid.ColumnSpan="2" Grid.Row="1" Margin="0,30" VerticalAlignment="Top" Background="Black"></Separator>
+                        <Separator Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Top" Background="Black" Margin="0,30"></Separator>
 
                         <Grid Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" >
@@ -72,7 +72,7 @@
                         <Grid Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" >
 
-                                <Border Background="Cyan" Height="50" Padding="4" Width="50"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                <Border Background="Cyan"  BorderBrush="Black" BorderThickness="1" Height="50" Width="50" Margin="0,0,20,0" Padding="4"  >
                                     <Image HorizontalAlignment="Right" Source="..\Resources\achievement.png" Stretch="Uniform"/>
                                 </Border>
 
@@ -83,7 +83,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Separator Grid.ColumnSpan="2" Grid.Row="3" Margin="0,15" VerticalAlignment="Top" Background="Black"></Separator>
+                        <Separator Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Top" Background="Black" Margin="0,15" ></Separator>
 
                         <Grid Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center">
                             <ItemsControl ItemsSource="{Binding ReviewsInfo}">
@@ -92,15 +92,15 @@
                                         <StackPanel>
                                             <StackPanel Margin="0,0,0,15">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Border Visibility="{Binding Item1.isPositive, Converter={StaticResource BoolToVisibility}}" Background="Lime" Padding="8" Height="70" Width="70"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                                    <Border Visibility="{Binding Item1.isPositive, Converter={StaticResource BoolToVisibility}}" Background="Lime" BorderBrush="Black" BorderThickness="1"  Height="70" Width="70"  Margin="0,0,20,0" Padding="8">
                                                         <Image HorizontalAlignment="Right" Source="..\Resources\like.png" Stretch="Uniform"/>
                                                     </Border>
-                                                    <Border Visibility="{Binding Item1.isPositive, Converter={StaticResource BoolToVisibility},ConverterParameter=false}" Background="Red" Padding="8" Height="70" Width="70"  Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" >
+                                                    <Border Visibility="{Binding Item1.isPositive, Converter={StaticResource BoolToVisibility},ConverterParameter=false}" Background="Red"  BorderBrush="Black" BorderThickness="1" Height="70" Width="70" Margin="0,0,20,0" Padding="8"  >
                                                         <Image HorizontalAlignment="Right" Source="..\Resources\dislike.png" Stretch="Uniform"/>
                                                     </Border>
                                                     <TextBlock FontSize="19" Text="{Binding Item2.nickname}" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                                 </StackPanel>
-                                                <Border Visibility="{Binding Item1.text, Converter={StaticResource StringEmptyToVisibility}}" Padding="7" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" >
+                                                <Border Visibility="{Binding Item1.text, Converter={StaticResource StringEmptyToVisibility}}" Background="White" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" Padding="7" >
                                                     <TextBlock Text="{Binding Item1.text}" TextWrapping="Wrap" Width="500"></TextBlock>
                                                 </Border>
                                             </StackPanel>

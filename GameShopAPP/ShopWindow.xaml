@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
         mc:Ignorable="d"
-        Title="ShopWindow" Height="900" Width="1500" MinHeight="450"  MinWidth="680">
+        Title="Shop" Height="900" Width="1500" MinHeight="450"  MinWidth="680">
 
     <Window.Resources>
         <cnv:SearchTextToBoolConverter x:Key="SearchTextToBool"/>
@@ -34,9 +34,9 @@
                         </Border>
                     </Button>
                     <Grid>
-                        <Rectangle Width="379" Height="25" HorizontalAlignment="Left" Fill="Black"></Rectangle>
+                        <Rectangle Width="379" Height="25" Fill="Black" HorizontalAlignment="Left" ></Rectangle>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox HorizontalAlignment="Left" Margin="3,0,3,0" Width="350" Height="20" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Width="350" Height="20" Margin="3,0,3,0" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="GotFocus">
                                         <i:InvokeCommandAction Command="{Binding SearchBarFocusCommand}"/>
@@ -54,9 +54,9 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel Margin="10" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Column="1" >
-                <TextBlock VerticalAlignment="Center" Foreground="Green" Text="$" Margin="20,0,0,0" FontSize="15"></TextBlock>
-                <TextBlock VerticalAlignment="Center" Foreground="Green" Text="{Binding User.accountBalanceUSD, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="15" Margin="3,0,10,0"></TextBlock>
+            <StackPanel Grid.Column="1" FlowDirection="RightToLeft" Orientation="Horizontal" Margin="10" >
+                <TextBlock Text="$" Foreground="Green" FontSize="15" VerticalAlignment="Center" Margin="20,0,0,0" ></TextBlock>
+                <TextBlock Text="{Binding User.accountBalanceUSD, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Foreground="Green" FontSize="15" VerticalAlignment="Center" Margin="3,0,10,0"></TextBlock>
                 <Grid>
                     <Ellipse Width="47" Height="47" Fill="Cyan"/>
                     <Button Command="{Binding NavigateProfileCommand}" Background="Transparent">

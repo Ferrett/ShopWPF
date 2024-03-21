@@ -53,17 +53,6 @@ namespace GameShopAPP.ViewModels
             }
         }
 
-        private string _newPassword;
-        public string NewPassword
-        {
-            get { return _newPassword; }
-            set
-            {
-                _newPassword = value;
-                OnPropertyChanged("NewPassword");
-            }
-        }
-
         private BitmapImage _openedImage;
         public BitmapImage OpenedImage
         {
@@ -83,7 +72,6 @@ namespace GameShopAPP.ViewModels
 
             IsChangesSuccessful = false;
             ResponseText = string.Empty;
-            NewPassword = string.Empty;
 
             SaveChangesCommand = new RelayCommand(SaveChanges);
             ChangePFPCommand = new RelayCommand(ChangePFP);
@@ -114,7 +102,7 @@ namespace GameShopAPP.ViewModels
             var validationResult = _registrationModelValidation.Validate(new RegistrationModel()
             {
                 login = User.login,
-                password = User.password,
+                password = null,
                 nickname = User.nickname,
                 email = User.email
             });
@@ -131,7 +119,6 @@ namespace GameShopAPP.ViewModels
                 ResponseText = "Data updated successfully";
             }
 
-            User.password = BCrypt.Net.BCrypt.HashPassword(User.password);
             User.email = User.email == string.Empty ? null : User.email;
 
             await _userApiRequest.PutUserRequest(_userID, User);

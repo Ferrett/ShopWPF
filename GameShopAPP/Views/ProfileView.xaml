@@ -43,17 +43,18 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Margin="0,15,0,0">
-                    <TextBlock Text="Login" Margin="0,0,0,10" TextAlignment="Center"></TextBlock>
+                    <Label Content="Login" HorizontalAlignment="Center" Margin="0,0,0,10"></Label>
                     <TextBox Text="{Binding User.login, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="200"></TextBox>
-                    <TextBlock Margin="0,40,0,10" Text="Password" TextAlignment="Center"></TextBlock>
-                    <TextBox Text="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged,Mode=OneWayToSource}" Width="200"></TextBox>
-                    <TextBlock Margin="0,40,0,10" Text="Nickname" TextAlignment="Center"></TextBlock>
+
+                    <Label Content="Nickname" HorizontalAlignment="Center" Margin="0,40,0,10" ></Label>
                     <TextBox Text="{Binding User.nickname, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="200"></TextBox>
-                    <TextBlock Margin="0,40,0,10" Text="Email" TextAlignment="Center"></TextBlock>
+
+                    <Label Content="Email" HorizontalAlignment="Center" Margin="0,40,0,10" ></Label>
                     <TextBox Text="{Binding User.email, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="200"></TextBox>
+                    
                     <TextBlock Foreground="{Binding IsChangesSuccessful, Converter={StaticResource BoolToColor}}" Margin="0,10,0,0" TextAlignment="Center" Text="{Binding ResponseText}"></TextBlock>
                 </StackPanel>
-                <Button Command="{Binding SaveChangesCommand}" Margin="0,20,0,0"  Grid.Row="1" Grid.ColumnSpan="2" Width="120" Height="40" Content="Save changes"></Button>
+                <Button Grid.Row="1" Grid.ColumnSpan="2" Command="{Binding SaveChangesCommand}" Content="Save changes" Width="120" Height="40" Margin="0,20,0,0" ></Button>
             </Grid>
         </StackPanel>
     </Grid>

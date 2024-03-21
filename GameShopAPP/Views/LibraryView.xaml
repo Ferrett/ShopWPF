@@ -19,11 +19,11 @@
         <Grid Background="LightGray">
             <StackPanel>
                 <Separator Background="Black"></Separator>
-                <Label HorizontalAlignment="Center" Content="HOME"></Label>
+                <Label Content="HOME" HorizontalAlignment="Center" ></Label>
                 <ItemsControl ItemsSource="{Binding GameInfo}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Background="DarkGray" x:Name="bnt" >
+                            <StackPanel Background="DarkGray">
                                 <Separator Background="Black"></Separator>
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
@@ -33,19 +33,19 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                        <Image Height="70" Width="70" Source="{Binding Item1.logoURL}" Stretch="Uniform"/>
-                                        <TextBlock Foreground="Blue" TextDecorations="Underline" Cursor="Hand" FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding Item1.title}">
+                                        <Image Source="{Binding Item1.logoURL}" Stretch="Uniform" Height="70" Width="70" />
+                                        <TextBlock Text="{Binding Item1.title}" FontSize="22" Foreground="Blue" TextDecorations="Underline" Cursor="Hand" VerticalAlignment="Center" Margin="20,0,0,0" >
                                             <i:Interaction.Triggers>
-    <i:EventTrigger EventName="MouseLeftButtonDown">
-        <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.id}"/>
-        <i:InvokeCommandAction Command="{Binding DataContext.NavigateGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-    </i:EventTrigger>
-</i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.id}"/>
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.NavigateGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </TextBlock>
                                     </StackPanel>
 
-                                    <StackPanel HorizontalAlignment="Center" Grid.Column="1" Orientation="Horizontal">
-                                        <TextBlock FontSize="13" VerticalAlignment="Center" Margin="50,0,0,0" TextAlignment="Center">
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="13" TextAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" >
                                             <Run Text="Playtime:&#x0a;" />
                                             <Run Text="{Binding Item2.hoursPlayed, UpdateSourceTrigger=PropertyChanged}" FontSize="16" />
                                             <Run Text="h." FontSize="16" />
@@ -58,17 +58,17 @@
                                         </TextBlock>
                                     </StackPanel>
 
-                                    <StackPanel Grid.Column="2" FlowDirection="RightToLeft" Orientation="Horizontal">
-                                        <Button Cursor="Hand" Command="{Binding DataContext.PlayGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft" >
+                                        <Button Command="{Binding DataContext.PlayGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
                                                 CommandParameter="{Binding Item2.id}" 
-                                                Padding="7" Background="Lime" Margin="10,0,10,0" Height="50" Width="70" HorizontalAlignment="Right">
+                                                Background="Lime" HorizontalAlignment="Right" Height="50" Width="70" Cursor="Hand" Margin="10,0,10,0" Padding="7">
                                             <Border >
                                                 <Image Source="..\Resources\play.png" Stretch="Uniform"/>
                                             </Border>
                                         </Button>
-                                        <Button Cursor="Hand" Command="{Binding DataContext.GetAchievementCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                        <Button Command="{Binding DataContext.GetAchievementCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
                                             CommandParameter="{Binding Item2.id}" 
-                                            Padding="4" Background="Cyan" HorizontalAlignment="Right" Height="50" Width="70">
+                                            Background="Cyan" HorizontalAlignment="Right" Cursor="Hand"  Height="50" Width="70" Padding="4" >
                                             <Border>
                                                 <Image Source="..\Resources\achievement.png" Stretch="Uniform"/>
                                             </Border>

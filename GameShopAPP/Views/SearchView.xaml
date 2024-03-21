@@ -18,8 +18,6 @@
 
     <Grid>
         <Grid Background="LightGray">
-
-
             <StackPanel>
                 <Separator Background="Black"></Separator>
                 <Label HorizontalAlignment="Center" Content="SEARCH"></Label>
@@ -36,8 +34,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                        <Image Height="70" Width="70" Source="{Binding Item1.logoURL}" Stretch="Uniform"/>
-                                        <TextBlock Foreground="Blue" TextDecorations="Underline" Cursor="Hand" FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" Text="{Binding Item1.title}">
+                                        <Image Source="{Binding Item1.logoURL}" Stretch="Uniform" Height="70" Width="70" />
+                                        <TextBlock Text="{Binding Item1.title}" Foreground="Blue" TextDecorations="Underline" Cursor="Hand" FontSize="22" VerticalAlignment="Center" Margin="20,0,0,0" >
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                                     <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.id}"/>
@@ -53,7 +51,7 @@
                                                 <Run Text="Developer:&#x0a;" />
                                                 <Run Text="{Binding Item2.name}" FontSize="16" />
                                             </TextBlock>
-                                            <TextBlock Margin="40,0,0,0" FontSize="13" VerticalAlignment="Center" TextAlignment="Center">
+                                            <TextBlock FontSize="13" VerticalAlignment="Center" TextAlignment="Center" Margin="40,0,0,0" >
                                                 <Run Text="Release date:&#x0a;" />
                                                 <Run Text="{Binding Item1.publishDate, Converter={StaticResource DateTimeToDate}}" FontSize="16" />
                                             </TextBlock>
