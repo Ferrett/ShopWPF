@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Model
+namespace GameShopAPP.Models
 {
     [Serializable]
     public record Game : INotifyPropertyChanged
@@ -14,7 +9,7 @@ namespace GameShopAPP.Model
         private int _id { get; set; }
         private string _title { get; set; } = null!;
         private string? _logoURL { get; set; }
-        private float _priceUsd { get; set; }
+        private float _priceUSD { get; set; }
         private DateTime _publishDate { get; set; }
         private int _achievementsAmount { get; set; }
         private int _developerID { get; set; }
@@ -28,6 +23,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("id");
             }
         }
+
         public string title
         {
             get { return _title; }
@@ -37,6 +33,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("title");
             }
         }
+
         public string? logoURL
         {
             get { return _logoURL; }
@@ -46,15 +43,17 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("logoURL");
             }
         }
-        public float priceUsd
+
+        public float priceUSD
         {
-            get { return _priceUsd; }
+            get { return _priceUSD; }
             set
             {
-                _priceUsd = value;
-                OnPropertyChanged("priceUsd");
+                _priceUSD = value;
+                OnPropertyChanged("_priceUSD");
             }
         }
+
         public DateTime publishDate
         {
             get { return _publishDate; }
@@ -64,6 +63,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("publishDate");
             }
         }
+
         public int achievementsAmount
         {
             get { return _achievementsAmount; }
@@ -73,6 +73,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("achievementsAmount");
             }
         }
+
         public int developerID
         {
             get { return _developerID; }
@@ -82,7 +83,8 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("developerID");
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

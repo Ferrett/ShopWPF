@@ -1,11 +1,6 @@
-﻿using GameShopAPP.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameShopAPP.Models;
 
-namespace GameShopAPP.Services.Validation.DeveloperValidation
+namespace GameShopAPP.Services.Validation
 {
     public class DeveloperValidation : IDeveloperValidation
     {

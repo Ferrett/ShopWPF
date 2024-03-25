@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Model
+namespace GameShopAPP.Models
 {
     [Serializable]
     public record User : INotifyPropertyChanged
@@ -15,8 +10,9 @@ namespace GameShopAPP.Model
         private string _login { get; set; } = null!;
         private string _password { get; set; } = null!;
         private string _nickname { get; set; } = null!;
-        private string? _avatarURL { get; set; } 
+        private string _profilePictureURL { get; set; } = null!;
         private string? _email { get; set; }
+        private float _accountBalanceUSD { get; set; }
         private DateTime _creationDate { get; set; }
 
         public int id
@@ -28,6 +24,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("id");
             }
         }
+
         public string login
         {
             get { return _login; }
@@ -37,6 +34,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("login");
             }
         }
+
         public string password
         {
             get { return _password; }
@@ -46,6 +44,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("password");
             }
         }
+
         public string nickname
         {
             get { return _nickname; }
@@ -55,15 +54,17 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("nickname");
             }
         }
-        public string? avatarURL
+
+        public string profilePictureURL
         {
-            get { return _avatarURL; }
+            get { return _profilePictureURL; }
             set
             {
-                _avatarURL = value;
-                OnPropertyChanged("avatarURL");
+                _profilePictureURL = value;
+                OnPropertyChanged("profilePictureURL");
             }
         }
+
         public string? email
         {
             get { return _email; }
@@ -71,6 +72,16 @@ namespace GameShopAPP.Model
             {
                 _email = value;
                 OnPropertyChanged("email");
+            }
+        }
+
+        public float accountBalanceUSD
+        {
+            get { return _accountBalanceUSD; }
+            set
+            {
+                _accountBalanceUSD = value;
+                OnPropertyChanged("accountBalanceUSD");
             }
         }
         public DateTime creationDate
@@ -83,7 +94,7 @@ namespace GameShopAPP.Model
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

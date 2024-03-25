@@ -8,11 +8,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
+    <Page Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\achievement.png" />
+    <None Remove="Resources\dislike.png" />
+    <None Remove="Resources\home.jpg" />
+    <None Remove="Resources\home.png" />
+    <None Remove="Resources\like.png" />
+    <None Remove="Resources\play.png" />
+    <None Remove="Resources\search.jpg" />
+    <None Remove="Resources\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\achievement.png" />
+    <Resource Include="Resources\dislike.png" />
+    <Resource Include="Resources\home.png" />
+    <Resource Include="Resources\like.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\search.png" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,7 @@
-﻿using GameShopAPP.Model;
-using GameShopAPP.Model.ServiceModels;
-using System;
-using System.Collections.Generic;
+﻿using GameShopAPP.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Services.Validation.UserValidation
+namespace GameShopAPP.Services.Validation
 {
     public class UserValidation : IUserValidation
     {

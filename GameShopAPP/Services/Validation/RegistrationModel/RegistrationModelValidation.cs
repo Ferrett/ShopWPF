@@ -1,13 +1,7 @@
-﻿using GameShopAPP.Model;
-using GameShopAPP.Model.ServiceModels;
-using System;
-using System.Collections.Generic;
+﻿using GameShopAPP.Models.ServiceModels;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Services.Validation.RegistrationValidation
+namespace GameShopAPP.Services.Validation
 {
     public class RegistrationModelValidation : IRegistrationModelValidation
     {
@@ -17,9 +11,12 @@ namespace GameShopAPP.Services.Validation.RegistrationValidation
             if (loginValidationResult.result == false)
                 return (false, loginValidationResult.errorMessage);
 
-            var passwordValidationResult = ValidatePassword(registrationModel);
-            if (passwordValidationResult.result == false)
-                return (false, passwordValidationResult.errorMessage);
+            if (registrationModel.password != null)
+            {
+                var passwordValidationResult = ValidatePassword(registrationModel);
+                if (passwordValidationResult.result == false)
+                    return (false, passwordValidationResult.errorMessage);
+            }
 
             var nicknameValidationResult = ValidateNickname(registrationModel);
             if (nicknameValidationResult.result == false)

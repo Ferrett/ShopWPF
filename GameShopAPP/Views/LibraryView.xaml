@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="GameShopAPP.Views.LibraryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GameShopAPP.Views"
+             xmlns:localx="clr-namespace:GameShopAPP.ViewModels"
+             xmlns:cnv="clr-namespace:GameShopAPP.Services.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <localx:LibraryViewModel x:Key="LibraryViewModelInstance"/>
+        <cnv:AchievementsAmountToVisibilityConverter x:Key="AchievementsAmountToVisibility"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid Background="LightGray">
+            <StackPanel>
+                <Separator Background="Black"></Separator>
+                <Label Content="HOME" HorizontalAlignment="Center" ></Label>
+                <ItemsControl ItemsSource="{Binding GameInfo}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Background="DarkGray">
+                                <Separator Background="Black"></Separator>
+                                <Grid Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <Image Source="{Binding Item1.logoURL}" Stretch="Uniform" Height="70" Width="70" />
+                                        <TextBlock Text="{Binding Item1.title}" FontSize="22" Foreground="Blue" TextDecorations="Underline" Cursor="Hand" VerticalAlignment="Center" Margin="20,0,0,0" >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.GameTitleClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1.id}"/>
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.NavigateGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="13" TextAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" >
+                                            <Run Text="Playtime:&#x0a;" />
+                                            <Run Text="{Binding Item2.hoursPlayed, UpdateSourceTrigger=PropertyChanged}" FontSize="16" />
+                                            <Run Text="h." FontSize="16" />
+                                        </TextBlock>
+                                        <TextBlock Visibility="{Binding Item1.achievementsAmount, Converter={StaticResource AchievementsAmountToVisibility},UpdateSourceTrigger=PropertyChanged}" FontSize="13" VerticalAlignment="Center" Margin="30,0,0,0" TextAlignment="Center">  
+                                            <Run Text="Achievements:&#x0a;" />
+                                            <Run Text="{Binding Item2.achievementsGotten}" FontSize="16" />
+                                            <Run Text=" / " FontSize="16" />
+                                            <Run Text="{Binding Item1.achievementsAmount}" FontSize="16" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" FlowDirection="RightToLeft" >
+                                        <Button Command="{Binding DataContext.PlayGameCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                                CommandParameter="{Binding Item2.id}" 
+                                                Background="Lime" HorizontalAlignment="Right" Height="50" Width="70" Cursor="Hand" Margin="10,0,10,0" Padding="7">
+                                            <Border >
+                                                <Image Source="..\Resources\play.png" Stretch="Uniform"/>
+                                            </Border>
+                                        </Button>
+                                        <Button Command="{Binding DataContext.GetAchievementCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding Item2.id}" 
+                                            Background="Cyan" HorizontalAlignment="Right" Cursor="Hand"  Height="50" Width="70" Padding="4" >
+                                            <Border>
+                                                <Image Source="..\Resources\achievement.png" Stretch="Uniform"/>
+                                            </Border>
+                                        </Button>
+
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

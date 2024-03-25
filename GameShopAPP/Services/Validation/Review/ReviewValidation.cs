@@ -1,12 +1,6 @@
-﻿using GameShopAPP.Model;
-using GameShopAPP.Model.ServiceModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameShopAPP.Models;
 
-namespace GameShopAPP.Services.Validation.ReviewValidation
+namespace GameShopAPP.Services.Validation
 {
     public class ReviewValidation : IReviewValidation
     {

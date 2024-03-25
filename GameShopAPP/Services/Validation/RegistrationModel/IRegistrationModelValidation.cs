@@ -1,11 +1,6 @@
-﻿using GameShopAPP.Model.ServiceModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameShopAPP.Models.ServiceModels;
 
-namespace GameShopAPP.Services.Validation.RegistrationValidation
+namespace GameShopAPP.Services.Validation
 {
     public interface IRegistrationModelValidation
     {

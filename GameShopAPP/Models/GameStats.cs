@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Model
+namespace GameShopAPP.Models
 {
     [Serializable]
     public record GameStats : INotifyPropertyChanged
@@ -45,6 +40,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("achievementsGotten");
             }
         }
+
         public DateTime purchaseDate
         {
             get { return _purchaseDate; }
@@ -54,6 +50,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("purchaseDate");
             }
         }
+
         public int userID
         {
             get { return _userID; }
@@ -63,6 +60,7 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("userID");
             }
         }
+
         public int gameID
         {
             get { return _gameID; }
@@ -72,7 +70,8 @@ namespace GameShopAPP.Model
                 OnPropertyChanged("gameID");
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

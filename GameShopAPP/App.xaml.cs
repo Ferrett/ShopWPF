@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using GameShopAPP.ViewModels;
 
 namespace GameShopAPP
 {
@@ -19,9 +20,8 @@ namespace GameShopAPP
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-
             DIContainer.Initialize();
+            base.OnStartup(e);
         }
     }
 }

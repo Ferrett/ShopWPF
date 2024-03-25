@@ -1,11 +1,6 @@
-﻿using GameShopAPP.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameShopAPP.Models;
 
-namespace GameShopAPP.Services.Validation.GameValidation
+namespace GameShopAPP.Services.Validation
 {
     public class GameValidation : IGameValidation
     {
@@ -47,12 +42,12 @@ namespace GameShopAPP.Services.Validation.GameValidation
         private const float MaxPrice = 9999.0f;
         public (bool result, string errorMessage) ValidatePrice(Game game)
         {
-            if (game.priceUsd < MinPrice)
+            if (game.priceUSD < MinPrice)
             {
                 return (false, $"Price can't be negative");
             }
 
-            if (game.priceUsd > MaxPrice)
+            if (game.priceUSD > MaxPrice)
             {
                 return (false, $"Price is too high");
             }

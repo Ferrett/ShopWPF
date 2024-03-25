@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameShopAPP.Model.ServiceModels
+namespace GameShopAPP.Models.ServiceModels
 {
 
     [Serializable]
@@ -26,6 +21,7 @@ namespace GameShopAPP.Model.ServiceModels
                 OnPropertyChanged("login");
             }
         }
+
         public string password
         {
             get { return _password; }
@@ -35,6 +31,7 @@ namespace GameShopAPP.Model.ServiceModels
                 OnPropertyChanged("password");
             }
         }
+
         public string nickname
         {
             get { return _nickname; }
@@ -44,6 +41,7 @@ namespace GameShopAPP.Model.ServiceModels
                 OnPropertyChanged("nickname");
             }
         }
+
         public string? email
         {
             get { return _email; }
@@ -54,7 +52,7 @@ namespace GameShopAPP.Model.ServiceModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
